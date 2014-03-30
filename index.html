@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <script src="javascripts/scale.fix.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -43,19 +42,6 @@
       </footer>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
-    <script type="text/javascript">
-	$(document).ready(function () {
-		$.ajax({
-			type:     "GET",
-			url:      "http://www.opgc.fr/observ/chimie/pdd.txt",
-			dataType: "html",
-			success: function(data) {
-			console.log(data);
-			}
-		});
-	});
-    </script>
 		
   </body>
 </html>
