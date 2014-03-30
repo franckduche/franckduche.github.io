@@ -46,16 +46,21 @@
     
     <script type="text/javascript">
 	$(document).ready(function () {
-	$.ajax({
-    type:     "GET",
-    url:      "http://www.opgc.fr/observ/chimie/pdd.txt",
-      dataType: "jsonp",
-    contentType: 'text/plain',
-    success: function(data){
-        console.log(data);
-    }
+		$.ajax({
+			type:     "GET",
+			url:      "http://www.opgc.fr/observ/chimie/pdd.txt",
+			dataType: "jsonp",
+			success: function(data) {
+				var tabValues = [];
+			data.split(' ').forEach(function(value) {
+			if (value.trim() !== '' && typeof value === 'number') {
+			tabValues.push(value);
+			}
+			})
+			alert(tabValues.join(', '));
+			}
+		});
 	});
-});
     </script>
 		
   </body>
