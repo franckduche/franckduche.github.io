@@ -53,11 +53,8 @@
 			success: function(data) {
 				var tabValues = [];
 			data.split(' ').forEach(function(value) {
-			if (value.trim() !== '' && typeof value === 'number') {
-			tabValues.push(value);
-			}
+			console.log(value);
 			})
-			alert(tabValues.join(', '));
 			}
 		});
 	});
