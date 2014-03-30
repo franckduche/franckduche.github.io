@@ -49,12 +49,9 @@
 		$.ajax({
 			type:     "GET",
 			url:      "http://www.opgc.fr/observ/chimie/pdd.txt",
-			dataType: "jsonp",
+			dataType: "text",
 			success: function(data) {
-				var tabValues = [];
-			data.split(' ').forEach(function(value) {
-			console.log(value);
-			})
+			console.log(data);
 			}
 		});
 	});
