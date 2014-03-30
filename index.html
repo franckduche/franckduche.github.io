@@ -46,14 +46,15 @@
     
     <script type="text/javascript">
 	$(document).ready(function () {
-		$.ajax({
-			crossDomain: true,
-			type:"GET",
-			async:false,
-			url: "http://www.opgc.fr/observ/chimie/pdd.txt",
-            dataType: "jsonp"
-		});
+	$.ajax({
+    type:     "GET",
+    url:      "http://www.opgc.fr/observ/chimie/pdd.txt",
+    dataType: "jsonp",
+    success: function(data){
+        console.log(data);
+    }
 	});
+});
     </script>
 		
   </body>
