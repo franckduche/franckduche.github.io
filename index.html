@@ -45,6 +45,7 @@
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
     <script type="text/javascript">
+    	response.addHeader("Access-Control-Allow-Origin", "*");
     	$.get('http://www.opgc.fr/observ/chimie/pdd.txt').done(function(data) {
 		alert(data);
 	});
