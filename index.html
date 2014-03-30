@@ -45,7 +45,9 @@
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
     <script type="text/javascript">
-    	alert("lll");
+    	$.get('http://www.opgc.fr/observ/chimie/pdd.txt').done(function(data) {
+		alert(data);
+	});
     </script>
 		
   </body>
