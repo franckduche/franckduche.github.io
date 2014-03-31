@@ -156,24 +156,36 @@ abstract class TranslatableEntity extends AbstractTranslatable
     }
 }</code></pre>
 <h2 id="implements-i18n-in-generated-files">Implements i18n in generated files</h2>
-<p>Add the use on top of the MyEntity class file.<br /> // MyName/MyBundle/Entity/MyEntity.php</p>
-<pre><code>use Prezent\Doctrine\Translatable\Annotation as Prezent;</code></pre>
-<p>Extends with the previously created class.<br /> // MyName/MyBundle/Entity/MyEntity.php</p>
-<pre><code>extends TranslatableEntity</code></pre>
-<p>Change visibility of the id.<br /> // MyName/MyBundle/Entity/MyEntity.php</p>
-<pre><code>protected $id;</code></pre>
-<p>Add translations property.<br /> // MyName/MyBundle/Entity/MyEntity.php</p>
-<pre><code>/**
+<p>Add the use on top of the MyEntity class file.</p>
+<pre><code>// MyName/MyBundle/Entity/MyEntity.php
+
+use Prezent\Doctrine\Translatable\Annotation as Prezent;</code></pre>
+<p>Extends with the previously created class.</p>
+<pre><code>// MyName/MyBundle/Entity/MyEntity.php
+
+extends TranslatableEntity</code></pre>
+<p>Change visibility of the id.</p>
+<pre><code>// MyName/MyBundle/Entity/MyEntity.php
+
+protected $id;</code></pre>
+<p>Add translations property.</p>
+<pre><code>// MyName/MyBundle/Entity/MyEntity.php
+
+/**
  * @Prezent\Translations(targetEntity=&quot;MyName\MyBundle\Entity\MyEntityTranslation&quot;)
  */
 protected $translations;</code></pre>
-<p>Instantiates the translations in constructor.<br /> // MyName/MyBundle/Entity/MyEntity.php</p>
-<pre><code>public function __construct()
+<p>Instantiates the translations in constructor.</p>
+<pre><code>// MyName/MyBundle/Entity/MyEntity.php
+
+public function __construct()
 {
     $this-&gt;translations = new \Doctrine\Common\Collections\ArrayCollection();
 }</code></pre>
-<p>Add method to get translation class name.<br /> // MyName/MyBundle/Entity/MyEntity.php</p>
-<pre><code>/**
+<p>Add method to get translation class name.</p>
+<pre><code>// MyName/MyBundle/Entity/MyEntity.php
+
+/**
  * Get name of translation entity class
  *
  * @return string 
@@ -182,8 +194,10 @@ public static function getTranslationEntityClass()
 {
     return &#39;MyEntityTranslation&#39;;
 }</code></pre>
-<p>Add method of the translation class into the other, using translate method.<br /> // MyName/MyBundle/Entity/MyEntity.php</p>
-<pre><code>/**
+<p>Add method of the translation class into the other, using translate method.</p>
+<pre><code>// MyName/MyBundle/Entity/MyEntity.php
+
+/**
  * Set title
  *
  * @param string $title
@@ -206,20 +220,30 @@ public function getTitle()
     return ($this-&gt;translate()-&gt;getTitle() ?: $this-&gt;translate(self::DEFAULT_LOCALE)-&gt;getTitle());
 }</code></pre>
 <hr />
-<p>Add the use on top of the MyEntityTranslation class file.<br /> // MyName/MyBundle/Entity/MyEntityTranslation.php</p>
-<pre><code>use Prezent\Doctrine\Translatable\Annotation as Prezent;
+<p>Add the use on top of the MyEntityTranslation class file.</p>
+<pre><code>// MyName/MyBundle/Entity/MyEntityTranslation.php
+
+use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;</code></pre>
-<p>Extends the class.<br /> // MyName/MyBundle/Entity/MyEntityTranslation.php</p>
-<pre><code>extends AbstractTranslation</code></pre>
-<p>Change visibility of the id.<br /> // MyName/MyBundle/Entity/MyEntityTranslation.php</p>
-<pre><code>protected $id;</code></pre>
-<p>Add translatable property.<br /> // MyName/MyBundle/Entity/MyEntityTranslation.php</p>
-<pre><code>/**
+<p>Extends the class.</p>
+<pre><code>// MyName/MyBundle/Entity/MyEntityTranslation.php
+
+extends AbstractTranslation</code></pre>
+<p>Change visibility of the id.</p>
+<pre><code>// MyName/MyBundle/Entity/MyEntityTranslation.php
+
+protected $id;</code></pre>
+<p>Add translatable property.</p>
+<pre><code>// MyName/MyBundle/Entity/MyEntityTranslation.php
+
+/**
  * @Prezent\Translatable(targetEntity=&quot;MyName\MyBundle\Entity\MyEntity&quot;)
  */
 protected $translatable;</code></pre>
-<p>Add method to get translation class name.<br /> // MyName/MyBundle/Entity/MyEntity.php</p>
-<pre><code>/**
+<p>Add method to get translation class name.</p>
+<pre><code>// MyName/MyBundle/Entity/MyEntity.php
+
+/**
  * Get name of translation entity class
  *
  * @return string 
@@ -232,16 +256,20 @@ public static function getTranslationEntityClass()
 <p>Then generate corresponding tables.<br /><code>app/console doctrine:schema:update --force</code></p>
 <h2 id="create-admin-page">Create admin page</h2>
 <p>Following code can be generated with this command.<br /><code>php app/console sonata:admin:generate MyName\MyBundle\Entity\MyEntity</code></p>
-<p>Create the class.<br /> // MyName/MyBundle/Admin/MyEntityAdmin.php</p>
-<pre><code>namespace MyName\MyBundle\Admin;
+<p>Create the class.</p>
+<pre><code>// MyName/MyBundle/Admin/MyEntityAdmin.php
+
+namespace MyName\MyBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
 
 class MyEntityAdmin extends Admin
 {
 }</code></pre>
-<p>Modify the edit/create form.<br /> // MyName/MyBundle/Admin/MyEntityAdmin.php</p>
-<pre><code>namespace MyName\MyBundle\Admin;
+<p>Modify the edit/create form.</p>
+<pre><code>// MyName/MyBundle/Admin/MyEntityAdmin.php
+
+namespace MyName\MyBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -256,8 +284,10 @@ class MyEntityAdmin extends Admin
         ;
     }
 }</code></pre>
-<p>Modify the search filter.<br /> // MyName/MyBundle/Admin/MyEntityAdmin.php</p>
-<pre><code>namespace MyName\MyBundle\Admin;
+<p>Modify the search filter.</p>
+<pre><code>// MyName/MyBundle/Admin/MyEntityAdmin.php
+
+namespace MyName\MyBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -271,8 +301,10 @@ class MyEntityAdmin extends Admin
         ;
     }
 }</code></pre>
-<p>Modify the showing list.<br /> // MyName/MyBundle/Admin/MyEntityAdmin.php</p>
-<pre><code>namespace MyName\MyBundle\Admin;
+<p>Modify the showing list.</p>
+<pre><code>// MyName/MyBundle/Admin/MyEntityAdmin.php
+
+namespace MyName\MyBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -288,8 +320,10 @@ class MyEntityAdmin extends Admin
         ;
     }
 }</code></pre>
-<p>Eventually configure routes.<br /> // MyName/MyBundle/Admin/MyEntityAdmin.php</p>
-<pre><code>namespace MyName\MyBundle\Admin;
+<p>Eventually configure routes.</p>
+<pre><code>// MyName/MyBundle/Admin/MyEntityAdmin.php
+
+namespace MyName\MyBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Route\RouteCollection;
@@ -305,8 +339,10 @@ class MyEntityAdmin extends Admin
         }
     }
 }</code></pre>
-<p>Create the configuration file (can be done in YAML too).<br /> <!-- MyName/MyBundle/Resources/config/admin.xml --></p>
-<pre><code>&lt;container xmlns=&quot;http://symfony.com/schema/dic/services&quot;
+<p>Create the configuration file (can be done in YAML too).</p>
+<pre><code>&lt;!-- MyName/MyBundle/Resources/config/admin.xml --&gt;
+
+&lt;container xmlns=&quot;http://symfony.com/schema/dic/services&quot;
     xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
     xsi:schemaLocation=&quot;http://symfony.com/schema/dic/services/services-1.0.xsd&quot;&gt;
     &lt;services&gt;
@@ -326,10 +362,37 @@ class MyEntityAdmin extends Admin
 <p>Then you can generate cache classes.<br /><code>php app/console cache:create-cache-class</code></p>
 <h2 id="useful-stuffs">Useful stuffs</h2>
 <p>You can use <code>sonata_type_model</code> or <code>sonata_type_model_list</code> in order to add an embedded admin.</p>
-<p>When using these types, you can create your own custom query so that you can filter which entities of the embedded admin you will show.<br /> $em = <span class="math"><em>t</em><em>h</em><em>i</em><em>s</em> −  &gt; <em>m</em><em>o</em><em>d</em><em>e</em><em>l</em><em>M</em><em>a</em><em>n</em><em>a</em><em>g</em><em>e</em><em>r</em> −  &gt; <em>g</em><em>e</em><em>t</em><em>E</em><em>n</em><em>t</em><em>i</em><em>t</em><em>y</em><em>M</em><em>a</em><em>n</em><em>a</em><em>g</em><em>e</em><em>r</em>(</span>this-&gt;getClass()); $query = ... $formMapper -&gt;add('relatedObject', 'sonata_type_model', array( 'query' =&gt; $query ) ) ;</p>
-<p>You can easily add actions buttons on the list.<br /> $listMapper -&gt;addIdentifier('id') -&gt;add('_action', 'actions', array( 'actions' =&gt; array( 'edit' =&gt; array(), 'delete' =&gt; array(), ) ) ) ;</p>
-<p>You can add the result of your own function in a new column that way.<br /> // MyName/MyBundle/Admin/MyEntityAdmin.php $listMapper -&gt;add('nbComments') ;</p>
-<pre><code>// MyName/MyBundle/Entity/MyEntity.php
+<p>When using these types, you can create your own custom query so that you can filter which entities of the embedded admin you will show.</p>
+<pre><code>$em = $this-&gt;modelManager-&gt;getEntityManager($this-&gt;getClass());
+$query = ...
+$formMapper
+    -&gt;add(&#39;relatedObject&#39;,
+        &#39;sonata_type_model&#39;,
+        array(
+            &#39;query&#39; =&gt; $query
+        )
+    )
+;</code></pre>
+<p>You can easily add actions buttons on the list.</p>
+<pre><code>$listMapper
+    -&gt;addIdentifier(&#39;id&#39;)
+    -&gt;add(&#39;_action&#39;,
+        &#39;actions&#39;,
+        array(
+            &#39;actions&#39; =&gt; array(
+                &#39;edit&#39; =&gt; array(),
+                &#39;delete&#39; =&gt; array(),
+            )
+        )
+    )
+;</code></pre>
+<p>You can add the result of your own function in a new column that way.</p>
+<pre><code>// MyName/MyBundle/Admin/MyEntityAdmin.php
+$listMapper
+    -&gt;add(&#39;nbComments&#39;)
+;
+
+// MyName/MyBundle/Entity/MyEntity.php
 public function getNbComments() {
     return $this-&gt;getComments()-&gt;count();
 }</code></pre>
