@@ -1,0 +1,305 @@
+<h1 id="sonata-with-i18n-entities-and-forms">Sonata with i18n entities and forms</h1>
+<p>It will explains how to create entities with some i18n properties and then how to generate an administration for them easily.</p>
+<h2 id="bundles-used">Bundles used</h2>
+<ul>
+<li><a href="Sonata%20Admin">https://github.com/sonata-project/SonataAdminBundle</a></li>
+<li><a href="Sonata%20Doctrine%20ORM%20Admin">https://github.com/sonata-project/SonataDoctrineORMAdminBundle</a></li>
+<li><a href="Doctrine%20Translatable">https://github.com/Prezent/doctrine-translatable-bundle/</a></li>
+<li><a href="Translation%20Form">https://github.com/a2lix/TranslationFormBundle</a></li>
+</ul>
+<h2 id="install-sonata">Install Sonata</h2>
+<h2 id="install-doctrinetranslatablebundle">Install DoctrineTranslatableBundle</h2>
+<h2 id="install-translationform">Install TranslationForm</h2>
+<h2 id="create-entity">Create entity</h2>
+<p>Write mapping schema with all fields.</p>
+<pre><code># MyName/MyBundle/Resources/config/doctrine/MyEntity.orm.yml
+MyName\MyBundle\Entity\MyEntity:
+    type: entity
+    repositoryClass: MyName\MyBundle\Repository\MyEntityRepository
+    table: my_entity
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        title:
+            type: string
+            length: 200
+        link:
+            type: string
+            length: 200</code></pre>
+<h2 id="move-i18n-fields">Move i18n fields</h2>
+<p>Move translatable fields to another file.</p>
+<pre><code># MyName/MyBundle/Resources/config/doctrine/MyEntity.orm.yml
+MyName\MyBundle\Entity\MyEntity:
+    type: entity
+    repositoryClass: MyName\MyBundle\Repository\MyEntityRepository
+    table: my_entity
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        link:
+            type: string
+            length: 200
+
+# MyName/MyBundle/Resources/config/doctrine/MyEntityTranslation.orm.yml
+MyName\MyBundle\Entity\MyEntityTranslation:
+    type: entity
+    table: my_entity_translation
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        title:
+            type: string
+            length: 200</code></pre>
+<p>Then generate entities classes.<br /><code>php app/console doctrine:generate:entities MyName\MyBundle</code></p>
+<h2 id="create-abstract-class-to-implements">Create abstract class to implements</h2>
+<pre><code>&lt;?php
+
+// MyName/MyBundle/Entity/TranslatableEntity.php
+
+namespace MyName\MyBundle\Entity;
+
+use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Entity\AbstractTranslatable;
+
+abstract class TranslatableEntity extends AbstractTranslatable
+{
+    /**
+     * @Prezent\CurrentLocale
+     */
+    protected $currentLocale;
+
+    /**
+     * Cache current translation. Useful in Doctrine 2.4+
+     */
+    protected $currentTranslation;
+
+    /**
+     * @var default locale.
+     */
+    const DEFAULT_LOCALE = &#39;fr&#39;;
+
+    public function getCurrentLocale()
+    {
+        return $this-&gt;currentLocale;
+    }
+
+    public function setCurrentLocale($locale)
+    {
+        $this-&gt;currentLocale = $locale;
+        return $this;
+    }
+
+    /**
+     * Translation helper method
+     */
+    public function translate($locale = null)
+    {
+        if (null === $locale) {
+            $locale = $this-&gt;currentLocale;
+        }
+
+        if (!$locale) {
+            throw new \RuntimeException(&#39;No locale has been set and currentLocale is empty&#39;);
+        }
+
+        if ($this-&gt;currentTranslation &amp;&amp; $this-&gt;currentTranslation-&gt;getLocale() === $locale) {
+            return $this-&gt;currentTranslation;
+        }
+
+        if (!$translation = $this-&gt;translations-&gt;get($locale)) {
+            $translation = $this::getTranslationEntityClass();
+            $translation-&gt;setLocale($locale);
+            $this-&gt;addTranslation($translation);
+        }
+
+        $this-&gt;currentTranslation = $translation;
+        return $translation;
+    }
+}</code></pre>
+<h2 id="implements-i18n-in-generated-files">Implements i18n in generated files</h2>
+<p>Add the use on top of the MyEntity class file.<br /> // MyName/MyBundle/Entity/MyEntity.php</p>
+<pre><code>use Prezent\Doctrine\Translatable\Annotation as Prezent;</code></pre>
+<p>Extends with the previously created class.<br /> // MyName/MyBundle/Entity/MyEntity.php</p>
+<pre><code>extends TranslatableEntity</code></pre>
+<p>Change visibility of the id.<br /> // MyName/MyBundle/Entity/MyEntity.php</p>
+<pre><code>protected $id;</code></pre>
+<p>Add translations property.<br /> // MyName/MyBundle/Entity/MyEntity.php</p>
+<pre><code>/**
+ * @Prezent\Translations(targetEntity=&quot;MyName\MyBundle\Entity\MyEntityTranslation&quot;)
+ */
+protected $translations;</code></pre>
+<p>Instantiates the translations in constructor.<br /> // MyName/MyBundle/Entity/MyEntity.php</p>
+<pre><code>public function __construct()
+{
+    $this-&gt;translations = new \Doctrine\Common\Collections\ArrayCollection();
+}</code></pre>
+<p>Add method to get translation class name.<br /> // MyName/MyBundle/Entity/MyEntity.php</p>
+<pre><code>/**
+ * Get name of translation entity class
+ *
+ * @return string 
+ */
+public static function getTranslationEntityClass()
+{
+    return &#39;MyEntityTranslation&#39;;
+}</code></pre>
+<p>Add method of the translation class into the other, using translate method.<br /> // MyName/MyBundle/Entity/MyEntity.php</p>
+<pre><code>/**
+ * Set title
+ *
+ * @param string $title
+ * @return MyEntityTranslation
+ */
+public function setTitle($title)
+{
+    $this-&gt;translate()-&gt;setTitle($title);
+
+    return $this;
+}
+
+/**
+ * Get title
+ *
+ * @return string 
+ */
+public function getTitle()
+{
+    return ($this-&gt;translate()-&gt;getTitle() ?: $this-&gt;translate(self::DEFAULT_LOCALE)-&gt;getTitle());
+}</code></pre>
+<hr />
+<p>Add the use on top of the MyEntityTranslation class file.<br /> // MyName/MyBundle/Entity/MyEntityTranslation.php</p>
+<pre><code>use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;</code></pre>
+<p>Extends the class.<br /> // MyName/MyBundle/Entity/MyEntityTranslation.php</p>
+<pre><code>extends AbstractTranslation</code></pre>
+<p>Change visibility of the id.<br /> // MyName/MyBundle/Entity/MyEntityTranslation.php</p>
+<pre><code>protected $id;</code></pre>
+<p>Add translatable property.<br /> // MyName/MyBundle/Entity/MyEntityTranslation.php</p>
+<pre><code>/**
+ * @Prezent\Translatable(targetEntity=&quot;MyName\MyBundle\Entity\MyEntity&quot;)
+ */
+protected $translatable;</code></pre>
+<p>Add method to get translation class name.<br /> // MyName/MyBundle/Entity/MyEntity.php</p>
+<pre><code>/**
+ * Get name of translation entity class
+ *
+ * @return string 
+ */
+public static function getTranslationEntityClass()
+{
+    return &#39;MyEntityTranslation&#39;;
+}</code></pre>
+<hr />
+<p>Then generate corresponding tables.<br /><code>app/console doctrine:schema:update --force</code></p>
+<h2 id="create-admin-page">Create admin page</h2>
+<p>Following code can be generated with this command.<br /><code>php app/console sonata:admin:generate MyName\MyBundle\Entity\MyEntity</code></p>
+<p>Create the class.<br /> // MyName/MyBundle/Admin/MyEntityAdmin.php</p>
+<pre><code>namespace MyName\MyBundle\Admin;
+
+use Sonata\AdminBundle\Admin\Admin;
+
+class MyEntityAdmin extends Admin
+{
+}</code></pre>
+<p>Modify the edit/create form.<br /> // MyName/MyBundle/Admin/MyEntityAdmin.php</p>
+<pre><code>namespace MyName\MyBundle\Admin;
+
+use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Form\FormMapper;
+
+class MyEntityAdmin extends Admin
+{
+    protected function configureFormFields(FormMapper $formMapper)
+    {
+        $formMapper
+            -&gt;add(&#39;link&#39;)
+            -&gt;add(&#39;translations&#39;, &#39;a2lix_translations&#39;)
+        ;
+    }
+}</code></pre>
+<p>Modify the search filter.<br /> // MyName/MyBundle/Admin/MyEntityAdmin.php</p>
+<pre><code>namespace MyName\MyBundle\Admin;
+
+use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Datagrid\DatagridMapper;
+
+class MyEntityAdmin extends Admin
+{
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    {
+        $datagridMapper
+            -&gt;add(&#39;link&#39;)
+        ;
+    }
+}</code></pre>
+<p>Modify the showing list.<br /> // MyName/MyBundle/Admin/MyEntityAdmin.php</p>
+<pre><code>namespace MyName\MyBundle\Admin;
+
+use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Datagrid\ListMapper;
+
+class MyEntityAdmin extends Admin
+{
+    protected function configureListFields(ListMapper $listMapper)
+    {
+        $listMapper
+            -&gt;addIdentifier(&#39;id&#39;)
+            -&gt;addIdentifier(&#39;title&#39;)
+            -&gt;add(&#39;link&#39;)
+        ;
+    }
+}</code></pre>
+<p>Eventually configure routes.<br /> // MyName/MyBundle/Admin/MyEntityAdmin.php</p>
+<pre><code>namespace MyName\MyBundle\Admin;
+
+use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Route\RouteCollection;
+
+class MyEntityAdmin extends Admin
+{
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection-&gt;remove(&#39;export&#39;);
+        // prevent display of &quot;Add new&quot; when embedding this form
+        if($this-&gt;hasParentFieldDescription()) {
+            $collection-&gt;remove(&#39;create&#39;);
+        }
+    }
+}</code></pre>
+<p>Create the configuration file (can be done in YAML too).<br /> <!-- MyName/MyBundle/Resources/config/admin.xml --></p>
+<pre><code>&lt;container xmlns=&quot;http://symfony.com/schema/dic/services&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xsi:schemaLocation=&quot;http://symfony.com/schema/dic/services/services-1.0.xsd&quot;&gt;
+    &lt;services&gt;
+
+       &lt;service id=&quot;sonata.admin.myentity&quot; class=&quot;MyName\MyBundle\Admin\MyEntityAdmin&quot;&gt;
+          &lt;tag name=&quot;sonata.admin&quot; manager_type=&quot;orm&quot; group=&quot;Group name&quot; label=&quot;My Enity&quot;/&gt;
+          &lt;argument /&gt;
+          &lt;argument&gt;MyName\MyBundle\Entity\MyEntity&lt;/argument&gt;
+          &lt;argument /&gt;
+          &lt;call method=&quot;setTranslationDomain&quot;&gt;
+              &lt;argument&gt;MyBundle&lt;/argument&gt;
+          &lt;/call&gt;
+      &lt;/service&gt;
+
+   &lt;/services&gt;
+&lt;/container&gt;</code></pre>
+<p>Then you can generate cache classes.<br /><code>php app/console cache:create-cache-class</code></p>
+<h2 id="useful-stuffs">Useful stuffs</h2>
+<p>You can use <code>sonata_type_model</code> or <code>sonata_type_model_list</code> in order to add an embedded admin.</p>
+<p>When using these types, you can create your own custom query so that you can filter which entities of the embedded admin you will show.<br /> $em = <span class="math"><em>t</em><em>h</em><em>i</em><em>s</em> −  &gt; <em>m</em><em>o</em><em>d</em><em>e</em><em>l</em><em>M</em><em>a</em><em>n</em><em>a</em><em>g</em><em>e</em><em>r</em> −  &gt; <em>g</em><em>e</em><em>t</em><em>E</em><em>n</em><em>t</em><em>i</em><em>t</em><em>y</em><em>M</em><em>a</em><em>n</em><em>a</em><em>g</em><em>e</em><em>r</em>(</span>this-&gt;getClass()); $query = ... $formMapper -&gt;add('relatedObject', 'sonata_type_model', array( 'query' =&gt; $query ) ) ;</p>
+<p>You can easily add actions buttons on the list.<br /> $listMapper -&gt;addIdentifier('id') -&gt;add('_action', 'actions', array( 'actions' =&gt; array( 'edit' =&gt; array(), 'delete' =&gt; array(), ) ) ) ;</p>
+<p>You can add the result of your own function in a new column that way.<br /> // MyName/MyBundle/Admin/MyEntityAdmin.php $listMapper -&gt;add('nbComments') ;</p>
+<pre><code>// MyName/MyBundle/Entity/MyEntity.php
+public function getNbComments() {
+    return $this-&gt;getComments()-&gt;count();
+}</code></pre>
