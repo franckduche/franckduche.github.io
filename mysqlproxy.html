@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Francky's Page</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Francky's Page</h1>
+        <p class="header"></p>
+
+        <ul>
+          <li><a class="buttons github" href="https://github.com/franckduche">My GitHub</a></li>
+          <li><a class="buttons" href="https://twitter.com/francky03">My Twitter</a></li>
+        </ul>
+
+      </header>
+      <section>
+      
+      
+      
+      <h1 id="test-de-mysql-proxy">Test de MySQL Proxy</h1>
+<p>Utilise Lua.<br />Compatibilité OS : Linux, Mac OS X, Free BSD, Windows XP/Vista, Windows Server 2003/2008.<br />Installation sous Debian : <code>sudo aptitude install mysql-proxy</code><br />Possibilité d'écrire la config dans un fichier. On le spécifiera dans la ligne de commande avec <code>--defaults-file=file_name</code>. Il doit avoir les permissions <code>660</code> au minimum. <a href="Voir%20plus%20d&#39;options">http://dev.mysql.com/doc/refman/5.6/en/mysql-proxy-configuration.html</a>. Le fichier sera de la forme :<br /> [mysql-proxy] admin-address = host:port admin-password = password daemon = true</p>
+<p>Mais possibilité également de faire tout par la ligne de commande : <code>mysql-proxy --admin-address=host:port --admin-password=password --daemon</code><br />Fonctions à redéfinir dans le script Lua : * <code>connect_server()</code> appelée à chaque connexion d'un utilisateur. <em>Utile pour le loadbalancing.</em> <a href="Voir%20plus">http://dev.mysql.com/doc/refman/5.6/en/mysql-proxy-scripting-connect-server.html</a>. * <code>read_handshake()</code> appelée au premier handshake retourné par le serveur. <em>Utile pour ajouter des vérifications.</em> <a href="Voir%20plus">http://dev.mysql.com/doc/refman/5.6/en/mysql-proxy-scripting-read-handshake.html</a>. * <code>read_auth()</code> appelée quand le paquet de connexion (db, user, password) est envoyé au serveur. <a href="Voir%20plus">http://dev.mysql.com/doc/refman/5.6/en/mysql-proxy-scripting-read-auth.html</a>. * <code>read_auth_result()</code> appelée quand le serveur retourne l'autorisation. <a href="Voir%20plus">http://dev.mysql.com/doc/refman/5.6/en/mysql-proxy-scripting-read-auth-result.html</a>. * <code>read_query()</code> appelée à chaque requête envoyée par le client. <em>Utile pour éditer ou filtrer les requêtes.</em> <a href="Voir%20plus">http://dev.mysql.com/doc/refman/5.6/en/mysql-proxy-scripting-read-query.html</a>. * <code>read_query_result()</code> appelée à chaque résultat de requête (préalablement injectée dans la queue avec <code>read_query()</code>). <a href="Voir%20plus">http://dev.mysql.com/doc/refman/5.6/en/mysql-proxy-scripting-read-query-result.html</a>.</p>
+<p>Bien veiller à ce qu'il y ait le même nombre de requêtes que de resultsets.<br />Le proxy contient les attributs connection (contient les attributs client et server), servers, queries, response.<br />Exemple pour ajouter une requête à la queue : <code>proxy.queries:append( 1, packet, { resultset_is_needed = true } )</code> Le premier paramètre est l'id souhaité, le deuxième le paquet contenant la requête, et le dernier permettra de déclencher la fonction <code>read_query_result()</code>. Si on le met à false, le résultat sera directement envoyé et donc ce sera plus rapide.<br />Possibilité de redéfinir la response avec son type (packet ou error) et son contenu (resultset ou string).<br />Exemple : <code>proxy.response.resultset = { fields = { ... }, rows = { ... } }</code></p>
+
+      
+      
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+  </body>
+</html>
