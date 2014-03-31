@@ -30,7 +30,11 @@
       
       
 <h1 id="test-de-mysql-proxy">Test de MySQL Proxy</h1>
-<p>Utilise Lua.<br />Compatibilité OS : Linux, Mac OS X, Free BSD, Windows XP/Vista, Windows Server 2003/2008.<br />Installation sous Debian : <code>sudo aptitude install mysql-proxy</code><br />Possibilité d'écrire la config dans un fichier.<br />On le spécifiera dans la ligne de commande avec <code>--defaults-file=file_name</code>.<br />Il doit avoir les permissions <code>660</code> au minimum.<br /><a href="Voir%20plus%20d&#39;options">http://dev.mysql.com/doc/refman/5.6/en/mysql-proxy-configuration.html</a>.<br />Le fichier sera de la forme :<br /> [mysql-proxy] admin-address = host:port admin-password = password daemon = true</p>
+<p>Utilise Lua.<br />Compatibilité OS : Linux, Mac OS X, Free BSD, Windows XP/Vista, Windows Server 2003/2008.<br />Installation sous Debian : <code>sudo aptitude install mysql-proxy</code><br />Possibilité d'écrire la config dans un fichier.<br />On le spécifiera dans la ligne de commande avec <code>--defaults-file=file_name</code>.<br />Il doit avoir les permissions <code>660</code> au minimum.<br /><a href="Voir%20plus%20d&#39;options">http://dev.mysql.com/doc/refman/5.6/en/mysql-proxy-configuration.html</a>.<br />Le fichier sera de la forme :</p>
+<pre><code>[mysql-proxy]
+admin-address = host:port
+admin-password = password
+daemon = true</code></pre>
 <p>Mais possibilité également de faire tout par la ligne de commande :<br /><code>mysql-proxy --admin-address=host:port --admin-password=password --daemon</code></p>
 <p>Fonctions à redéfinir dans le script Lua :</p>
 <ul>
