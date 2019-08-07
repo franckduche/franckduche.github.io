@@ -425,11 +425,11 @@ $("#generate-text").click(function() {
   text += " @type=" + $("#item-type-key").val();
 
   text += " @tags=";
-  let tag1 = $("#tag-restrictions").val();
-  let tag2 = $("#tag-cooking-style").val();
-  let tag3 = $("#tag-allergens").val();
-  let tag4 = $("#tag-packaging").val();
-  let tag5 = $("#tag-temperature").val();
+  let tag1 = $("#tag-restrictions").val() || [];
+  let tag2 = $("#tag-cooking-style").val() || [];
+  let tag3 = $("#tag-allergens").val() || [];
+  let tag4 = $("#tag-packaging").val() || [];
+  let tag5 = $("#tag-temperature").val() || [];
   let tags = tag1.concat(tag2, tag3, tag4, tag5);
   text += tags.join();
 
