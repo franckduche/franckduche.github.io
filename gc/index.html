@@ -345,9 +345,11 @@ Other	Caterer not Available?	10% off the food total	11
 <script src="files/jquery.min.js"></script>
 <script src="files/bootstrap.min.js"></script>
 <script src="files/egg.min.js"></script>
+<script src="https://gctools-0c1f.restdb.io/rest/_jsapi.js"></script>
 <img style="position: absolute; top: 33%; left: 25%; display: none;" id="egg1" src="files/giphy.gif">
 <img style="position: absolute; top: 33%; left: 25%; display: none;" id="egg2" src="files/giphy(1).gif">
 <script id="rendered-js">
+
       ///////////////////
 // MENU CREATION
 // MAVEN
@@ -462,6 +464,12 @@ $("#generate-text").click(function() {
   $("#Min").val("1");
   $("#sections").val("[]{}");
   $("#tax-percent").val(10);
+
+  // For stats
+  var db = new restdb("5d4c48e558a35b31adeba5ff");
+  var obj = new db.menucreations({"date": new Date(), "browser": navigator.appVersion});
+  obj.save();
+
 });
 
 $("#category-key").change(function() {
