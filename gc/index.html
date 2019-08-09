@@ -1,337 +1,336 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>GC tools</title>
-<link rel="stylesheet" href="./files/bootstrap.min.css">
-<style>
-.container {
-  margin-left: inherit;
-  margin-right: inherit;
-}
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title> GC tools </title>
+    <link rel="stylesheet" href="./files/bootstrap.min.css">
+    <style>
+    .container {
+      margin-left: inherit;
+      margin-right: inherit;
+    }
 
     body {
-  padding : 10px ;
-}
+      padding : 10px ;
+    }
 
-#content .nav-pills > li > a {
-  border-radius: 4px 4px 0 0 ;
-}
+    #content .nav-pills > li > a {
+      border-radius: 4px 4px 0 0 ;
+    }
 
-.white {
-  color: white;
-}
+    .white {
+      color: white;
+    }
 
-#item-name, #category-key, #item-type-key, #serves, #Min, #sections, #info {
-  width: 280px;
-  margin-bottom: 5px;
-}
+    #item-name, #category-key, #item-type-key, #serves, #Min, #sections, #info {
+      width: 280px;
+      margin-bottom: 5px;
+    }
 
-#tag-restrictions, #tag-cooking-style, #tag-allergens, #tag-packaging, #tag-temperature {
-  font-size: 12px;
-  height: 230px;
-  overflow-y: hidden;
-  padding: 1px 1px;
-}
+    #tag-restrictions, #tag-cooking-style, #tag-allergens, #tag-packaging, #tag-temperature {
+      font-size: 12px;
+      height: 230px;
+      overflow-y: hidden;
+      padding: 1px 1px;
+    }
 
-.right {
-  float: right;
-}
+    .right {
+      float: right;
+    }
 
-.form-control {
-  height: 20px;
-  padding: 4px 10px;
-}
+    .form-control {
+      height: 20px;
+      padding: 4px 10px;
+    }
 
-#errors {
-  color: #FCC;
-}
+    #errors {
+      color: #FCC;
+    }
 
-#generated-text {
-  min-height: 470px;
-}
+    #generated-text {
+      min-height: 470px;
+    }
 
-#footer {
-  font-size: 5px;
-  color: #CCC;
-  margin: auto;
-  width: 50%;
-  text-align: center;
-}
-
-
+    #footer {
+      font-size: 5px;
+      color: #CCC;
+      margin: auto;
+      width: 50%;
+      text-align: center;
+    }
 
 
-.nav-pills>li.active>a#fullfilments-tab {
-  color: #fff;
-  background-color: #42b6ca;
-}
+    .nav-pills>li.active>a#fullfilments-tab {
+      color: #fff;
+      background-color: #42b6ca;
+    }
 
-.tab-pane.active.color1 {
-  padding : 5px 15px;
-  background-color: #428bca;
-}
+    .tab-pane.active.color1 {
+      padding : 5px 15px;
+      background-color: #428bca;
+    }
 
-.tab-pane.active.color2 {
-  padding : 5px 15px;
-  background-color: #42b6ca;
-}
-  </style>
-</head>
+    .tab-pane.active.color2 {
+      padding : 5px 15px;
+      background-color: #42b6ca;
+    }
+    </style>
+  </head>
+
 <body translate="no">
 <div id="content" class="container">
-<ul class="nav nav-pills">
-<li class="active">
-<a href="#1b" data-toggle="tab">Menu creation</a>
-</li>
-<li class="">
-<a href="#2b" data-toggle="tab" id="fullfilments-tab">Fullfilments</a>
-</li>
-<li>
-<a href="#3b">Soon...</a>
-</li>
-<li>
-<a href="#4a">Soon...</a>
-</li>
-</ul>
-<div class="tab-content clearfix">
-<div class="tab-pane color1 active" id="1b">
-<div class="row" style="font-size: 14px;">
-<div class="col-md-6">
-<div class="row">
-<div class="col-md-3">
-<label for="item-name" class="white"> Item name </label>
-</div>
-<div class="col-md-8">
-<input type="text" name="item-name" id="item-name" class="form-control">
-</div>
-</div>
-<div class="row">
-<div class="col-md-3">
-<label for="category-key" class="white"> Category </label>
-</div>
-<div class="col-md-8">
-<select id="category-key" name="category-key">
-<option disabled="" selected="">Select category...</option>
-<option value="breakfast-package">Petit-déjeuners, Pauses</option>
-<option value="lunchbox">Lunchbox</option>
-<option value="plateaux-repas">Plateaux Repas</option>
-<option value="buffets">Buffets</option>
-<option value="cocktails">Cocktails</option>
-<option value="appetizers">Planches &amp; Apéro</option>
-<option value="snack-packages">Dessert</option>
-<option value="beverages">Boissons</option>
-<option value="complements">Équipement</option>
-</select>
-</div>
-</div>
-<div class="row">
-<div class="col-md-3">
-<label class="white" for="item-type-key" title="As we have some items that you can be found in different sections on the caterer profile, only several combinations are possible. Always input first the category key and then the item type">
-Item type
-</label>
-</div>
-<div class="col-md-8">
-<select id="item-type-key" name="item-type-key">
-<option disabled="" selected="">Select category first</option>
-</select>
-</div>
-</div>
-<label for="tag-restrictions" title="Print this tab to have a quick overview of the possible tags you can attached to an item. Tagging properly the items is key for the whole website as it helps the users to find what they need quickly and efficiently.
-          You can set a miximum number of tags for the same group. Here is a breakdown:
-          Restrictions: 4 max
-          Cooking Style: 3 max
-          Allergens: no max
-          Packaging:  1 max
-          Temperature: 1 max
-          Nevertheless, you can add several tags at the same time separating each of them by a coma. No need to differentiate by Group.">
-<span class="white">Tags</span> <br>
-<select id="tag-restrictions" name="tag-restrictions" class="form-control" multiple="">
-<option value="vegetarian">Végétarien</option>
-<option value="gluten-free">Sans gluten</option>
-<option value="kosher">Casher</option>
-<option value="hallal">Halal</option>
-<option value="organic">Bio</option>
-<option value="without-pork">Sans porc</option>
-<option value="cd_m_sans-lactose">Sans Lactose</option>
-<option value="vegan">Végétalien</option>
-</select>
-</label>
-<label for="tag-cooking-style">
-<select id="tag-cooking-style" name="tag-cooking-style" class="form-control" multiple="">
-<option value="french">Français</option>
-<option value="italian">Italien</option>
-<option value="asian">Asiatique</option>
-<option value="american">Americain</option>
-<option value="oriental">Oriental</option>
-<option value="german">Allemand</option>
-<option value="indian">Indien</option>
-<option value="cd_m_african">Africain</option>
-</select>
-</label>
-<label for="tag-allergens">
-<select id="tag-allergens" name="tag-allergens" class="form-control" multiple="">
-<option value="gluten">Gluten</option>
-<option value="molluscs">Mollusques</option>
-<option value="shellfish">Crustacés</option>
-<option value="sulfites">Sulfites</option>
-<option value="celery">Céleri</option>
-<option value="egg">Oeufs</option>
-<option value="soya">Soja</option>
-<option value="milk">Lait</option>
-<option value="mustard">Moutarde</option>
-<option value="peanuts">Arachides</option>
-<option value="lupin">Lupin</option>
-<option value="nuts">Fruits à coque</option>
-<option value="sesame">Sesame</option>
-<option value="fish">Poisson</option>
-</select>
-</label>
-<label for="tag-packaging">
-<select id="tag-packaging" name="tag-packaging" class="form-control" multiple="">
-<option value="cd_m_plastic">Recyclable</option>
-<option value="cd_m_porcelaine">Porcelaine</option>
-</select>
-</label>
-<label for="tag-temperature">
-<select id="tag-temperature" name="tag-temperature" class="form-control" multiple="">
-<option value="cd_m_hot">Livré chaud</option>
-<option value="cd_m_microwave">Micro-ondable</option>
-</select>
-</label>
-<br>
-<div class="row">
-<div class="col-md-4">
-<label for="price-ttc" title="Fill the price excluded vat. Use the coma as separator">
-<span class="white">Price TTC</span> <br>
-<input type="number" id="price-ttc" name="price-ttc" class="form-control">
-</label>
-</div>
-<div class="col-md-2">
-<label for="tax-percent">
-<span class="white"> VAT </span>
-<select id="tax-percent" name="tax-percent">
-<option value="0">0%</option>
-<option value="5.5">5,5%</option>
-<option value="10" selected="">10%</option>
-<option value="20">20%</option>
-</select>
-</label>
-</div>
-<div class="col-md-4">
-<label for="pexcl-vat" title="Fill the price excluded vat. Use the coma as separator">
-<span class="white">Price HT</span> <br>
-<input type="number" id="pexcl-vat" name="pexcl-vat" class="form-control">
-</label>
-</div>
-</div>
-<div class="row">
-<div class="col-md-3">
-<label for="serves" class="white"> Qtity / Pers </label>
-</div>
-<div class="col-md-8">
-<input type="number" id="serves" name="serves" min="1" value="1" class="form-control">
-</div>
-</div>
-<div class="row">
-<div class="col-md-3">
-<label for="Min" class="white"> Min quantity </label>
-</div>
-<div class="col-md-8">
-<input type="number" id="Min" name="Min" min="1" value="1" class="form-control">
-</div>
-</div>
-<div class="row">
-<div class="col-md-3">
-<label for="sections" class="white">
-Sections
-</label>
-</div>
-<div class="col-md-8">
-<textarea id="sections" name="sections" class="form-control">[]{}</textarea>
-</div>
-</div>
-<hr>
-<div class="row">
-<div class="col-md-3">
-<label for="vat" title="You can fill the TVA or choose to not include this criteria in the item creation. In that case, the VAT takes into account will be the one by default of the caterer.">
-<em class="white">Information</em>
-</label>
-</div>
-<div class="col-md-8">
-<textarea id="info" name="info" class="form-control"></textarea>
-</div>
-</div>
-<button class="btn btn-success right" id="generate-text">
-Generate text
-</button>
-</div>
-<div class="col-md-6">
-<p id="errors"></p>
-<textarea id="generated-text" class="form-control"></textarea>
-<br>
-<button class="btn btn-danger right" id="copy">
-Copy to clipboard
-</button>
-</div>
-</div>
-</div>
+  <ul class="nav nav-pills">
+    <li class="active">
+      <a href="#1b" data-toggle="tab">Menu creation</a>
+    </li>
+    <li class="">
+      <a href="#2b" data-toggle="tab" id="fullfilments-tab">Fullfilments</a>
+    </li>
+    <li>
+      <a href="#3b">Soon...</a>
+    </li>
+    <li>
+      <a href="#4a">Soon...</a>
+    </li>
+  </ul>
+  <div class="tab-content clearfix">
+    <div class="tab-pane color1 active" id="1b">
+      <div class="row" style="font-size: 14px;">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-3">
+              <label for="item-name" class="white"> Item name </label>
+            </div>
+            <div class="col-md-8">
+              <input type="text" name="item-name" id="item-name" class="form-control">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <label for="category-key" class="white"> Category </label>
+            </div>
+            <div class="col-md-8">
+              <select id="category-key" name="category-key">
+                <option disabled="" selected="">Select category...</option>
+                <option value="breakfast-package">Petit-déjeuners, Pauses</option>
+                <option value="lunchbox">Lunchbox</option>
+                <option value="plateaux-repas">Plateaux Repas</option>
+                <option value="buffets">Buffets</option>
+                <option value="cocktails">Cocktails</option>
+                <option value="appetizers">Planches &amp; Apéro</option>
+                <option value="snack-packages">Dessert</option>
+                <option value="beverages">Boissons</option>
+                <option value="complements">Équipement</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <label class="white" for="item-type-key" title="As we have some items that you can be found in different sections on the caterer profile, only several combinations are possible. Always input first the category key and then the item type">
+              Item type
+              </label>
+            </div>
+            <div class="col-md-8">
+              <select id="item-type-key" name="item-type-key">
+                <option disabled="" selected="">Select category first</option>
+              </select>
+            </div>
+          </div>
+          <label for="tag-restrictions" title="Print this tab to have a quick overview of the possible tags you can attached to an item. Tagging properly the items is key for the whole website as it helps the users to find what they need quickly and efficiently.
+                    You can set a miximum number of tags for the same group. Here is a breakdown:
+                    Restrictions: 4 max
+                    Cooking Style: 3 max
+                    Allergens: no max
+                    Packaging:  1 max
+                    Temperature: 1 max
+                    Nevertheless, you can add several tags at the same time separating each of them by a coma. No need to differentiate by Group.">
+            <span class="white">Tags</span> <br>
+            <select id="tag-restrictions" name="tag-restrictions" class="form-control" multiple="">
+              <option value="vegetarian">Végétarien</option>
+              <option value="gluten-free">Sans gluten</option>
+              <option value="kosher">Casher</option>
+              <option value="hallal">Halal</option>
+              <option value="organic">Bio</option>
+              <option value="without-pork">Sans porc</option>
+              <option value="cd_m_sans-lactose">Sans Lactose</option>
+              <option value="vegan">Végétalien</option>
+            </select>
+          </label>
+          <label for="tag-cooking-style">
+            <select id="tag-cooking-style" name="tag-cooking-style" class="form-control" multiple="">
+              <option value="french">Français</option>
+              <option value="italian">Italien</option>
+              <option value="asian">Asiatique</option>
+              <option value="american">Americain</option>
+              <option value="oriental">Oriental</option>
+              <option value="german">Allemand</option>
+              <option value="indian">Indien</option>
+              <option value="cd_m_african">Africain</option>
+            </select>
+          </label>
+          <label for="tag-allergens">
+            <select id="tag-allergens" name="tag-allergens" class="form-control" multiple="">
+              <option value="gluten">Gluten</option>
+              <option value="molluscs">Mollusques</option>
+              <option value="shellfish">Crustacés</option>
+              <option value="sulfites">Sulfites</option>
+              <option value="celery">Céleri</option>
+              <option value="egg">Oeufs</option>
+              <option value="soya">Soja</option>
+              <option value="milk">Lait</option>
+              <option value="mustard">Moutarde</option>
+              <option value="peanuts">Arachides</option>
+              <option value="lupin">Lupin</option>
+              <option value="nuts">Fruits à coque</option>
+              <option value="sesame">Sesame</option>
+              <option value="fish">Poisson</option>
+            </select>
+          </label>
+          <label for="tag-packaging">
+            <select id="tag-packaging" name="tag-packaging" class="form-control" multiple="">
+              <option value="cd_m_plastic">Recyclable</option>
+              <option value="cd_m_porcelaine">Porcelaine</option>
+            </select>
+          </label>
+          <label for="tag-temperature">
+            <select id="tag-temperature" name="tag-temperature" class="form-control" multiple="">
+              <option value="cd_m_hot">Livré chaud</option>
+              <option value="cd_m_microwave">Micro-ondable</option>
+            </select>
+          </label>
+          <br />
+          <div class="row">
+            <div class="col-md-4">
+              <label for="price-ttc" title="Fill the price excluded vat. Use the coma as separator">
+                <span class="white">Price TTC</span> <br>
+                <input type="number" id="price-ttc" name="price-ttc" class="form-control">
+              </label>
+            </div>
+            <div class="col-md-2">
+              <label for="tax-percent">
+                <span class="white"> VAT </span>
+                <select id="tax-percent" name="tax-percent">
+                  <option value="0">0%</option>
+                  <option value="5.5">5,5%</option>
+                  <option value="10" selected="">10%</option>
+                  <option value="20">20%</option>
+                </select>
+              </label>
+            </div>
+            <div class="col-md-4">
+              <label for="pexcl-vat" title="Fill the price excluded vat. Use the coma as separator">
+                <span class="white">Price HT</span> <br>
+                <input type="number" id="pexcl-vat" name="pexcl-vat" class="form-control">
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <label for="serves" class="white"> Qtity / Pers </label>
+            </div>
+            <div class="col-md-8">
+              <input type="number" id="serves" name="serves" min="1" value="1" class="form-control">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <label for="Min" class="white"> Min quantity </label>
+            </div>
+            <div class="col-md-8">
+              <input type="number" id="Min" name="Min" min="1" value="1" class="form-control">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <label for="sections" class="white">
+              Sections
+              </label>
+            </div>
+            <div class="col-md-8">
+              <textarea id="sections" name="sections" class="form-control">[]{}</textarea>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-3">
+              <label for="vat" title="You can fill the TVA or choose to not include this criteria in the item creation. In that case, the VAT takes into account will be the one by default of the caterer.">
+                <em class="white">Information</em>
+              </label>
+            </div>
+            <div class="col-md-8">
+              <textarea id="info" name="info" class="form-control"></textarea>
+            </div>
+          </div>
+          <button class="btn btn-success right" id="generate-text">
+          Generate text
+          </button>
+        </div>
+        <div class="col-md-6">
+          <p id="errors"></p>
+          <textarea id="generated-text" class="form-control"></textarea>
+          <br />
+          <button class="btn btn-danger right" id="copy">
+          Copy to clipboard
+          </button>
+        </div>
+      </div>
+    </div>
 
 
 
-<div class="tab-pane color2" id="2b">
-<textarea class="form-control" id="order-page-content"></textarea>
-<br>
-<label for="f-order-id">
-Order ID
-<input class="form-control" type="text" name="f-order-id" id="f-order-id">
-</label>
-<label for="f-tpbc">
-TPBC
-<input class="form-control" type="text" name="f-tpbc" id="f-tpbc">
-</label>
-<label for="f-gc-earned">
-GC earned
-<input class="form-control" type="text" name="f-gc-earned" id="f-gc-earned">
-</label>
-<label for="f-date-evt">
-Event date
-<input class="form-control" type="text" name="f-date-evt" id="f-date-evt">
-</label>
-<label for="f-p-earned">
-Partner earned
-<input class="form-control" type="text" name="f-p-earned" id="f-p-earned">
-</label>
-<label for="f-delivery-fees">
-Delivery fees
-<input class="form-control" type="text" name="f-delivery-fees" id="f-delivery-fees">
-</label>
-</div>
+    <div class="tab-pane color2" id="2b">
+      <textarea class="form-control" id="order-page-content"></textarea>
+      <br>
+      <label for="f-order-id">
+      Order ID
+      <input class="form-control" type="text" name="f-order-id" id="f-order-id">
+      </label>
+      <label for="f-tpbc">
+      TPBC
+      <input class="form-control" type="text" name="f-tpbc" id="f-tpbc">
+      </label>
+      <label for="f-gc-earned">
+      GC earned
+      <input class="form-control" type="text" name="f-gc-earned" id="f-gc-earned">
+      </label>
+      <label for="f-date-evt">
+      Event date
+      <input class="form-control" type="text" name="f-date-evt" id="f-date-evt">
+      </label>
+      <label for="f-p-earned">
+      Partner earned
+      <input class="form-control" type="text" name="f-p-earned" id="f-p-earned">
+      </label>
+      <label for="f-delivery-fees">
+      Delivery fees
+      <input class="form-control" type="text" name="f-delivery-fees" id="f-delivery-fees">
+      </label>
+    </div>
 
 
 
-<div class="tab-pane" id="3b">
-<p>
-Delivery issues	Less 30 minutes late	Remove the delivery fee on the order	1
-More than 30 minutes but less than 60 minutes late	Remove of the delivery fee and 10% off of the food total.	2
-More than 60 minutes late	Remove delivery fee and 30% off of the food total to full gesture + 50€ discount on next order	3
-Delivery in advance	Remove the delivery fee on the order	4
-No delivery at all	Remove the full amount on the order + 50% on next order	5
-Ordering issues	Inappropriate delivery	Remove the delivery fee + 10% off the food total	6
-Wrong items delivered	Remove the delivery fee + 10% off the food total	7
-Missing items	Remove the delivery fee + remove the price of items not delivered + 10% off the food total	8
-Food issues?	Remove the delivery fee + remove the price of items not god + 10% off the food total	9
-Insufficient Quantities?	10% off the food total	10
-Other	Caterer not Available?	10% off the food total	11
-</p>
-</div>
+    <div class="tab-pane" id="3b">
+      <p>
+      Delivery issues	Less 30 minutes late	Remove the delivery fee on the order	1
+      More than 30 minutes but less than 60 minutes late	Remove of the delivery fee and 10% off of the food total.	2
+      More than 60 minutes late	Remove delivery fee and 30% off of the food total to full gesture + 50€ discount on next order	3
+      Delivery in advance	Remove the delivery fee on the order	4
+      No delivery at all	Remove the full amount on the order + 50% on next order	5
+      Ordering issues	Inappropriate delivery	Remove the delivery fee + 10% off the food total	6
+      Wrong items delivered	Remove the delivery fee + 10% off the food total	7
+      Missing items	Remove the delivery fee + remove the price of items not delivered + 10% off the food total	8
+      Food issues?	Remove the delivery fee + remove the price of items not god + 10% off the food total	9
+      Insufficient Quantities?	10% off the food total	10
+      Other	Caterer not Available?	10% off the food total	11
+      </p>
+    </div>
 
 
 
-<div class="tab-pane" id="4b">
-<p>A</p>
-</div>
-</div>
+    <div class="tab-pane" id="4b">
+      <p>A</p>
+    </div>
+  </div>
 </div>
 
 
@@ -340,6 +339,27 @@ Other	Caterer not Available?	10% off the food total	11
 <p id="footer">
 © Paul &amp; Franck (mais surtout Franck)
 </p>
+</div>
+
+<div id="username-modal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h4>
+          Please enter your username.
+        </h4>
+        <br />
+        <label for="username">
+          Username:&nbsp;&nbsp;&nbsp;
+          <input type="text" name="username" id="username" />
+        </label>
+      </div>
+      <div class="modal-footer">
+        <button id="save-username" type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 
@@ -404,11 +424,28 @@ var itemOptionsComplements = {
   Équipement: "complements"
 };
 
+if (typeof(Storage) !== "undefined") {
+  var username = window.localStorage.getItem('username');
+  if (!username || username == "") {
+    $('#username-modal').modal();
+  }
+  else {
+    console.log(`${username} successfully connected`);
+  }
+}
+
+$("#save-username").click(function() {
+  var usernameInput = $("#username").val();
+  var sanitizedUsername = usernameInput.replace(/[^a-z0-9áéíóúñü \.,_-]/gim,"").trim();
+  window.localStorage.setItem('username', usernameInput);
+});
+
 var db = new restdb("5d4c48e558a35b31adeba5ff");
 
 async function tracking() {
   try {
-    var obj = new db.menucreations({"date": new Date(), "browser": navigator.appVersion});
+    var obj = new db.menucreations({"date": new Date(), "browser": navigator.appVersion, "username": window.localStorage.getItem('username')});
+    console.log(obj);
     await obj.save();
   }
   catch (err) {
@@ -667,4 +704,5 @@ var egg2 = new Egg("f,r,a,n,c,k", function() {
     </script>
 
 
-</body></html>
+</body>
+</html>
