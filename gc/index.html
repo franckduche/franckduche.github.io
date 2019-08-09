@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>GC tools</title>
 <link rel="stylesheet" href="./files/bootstrap.min.css">
 <style>
@@ -402,74 +404,92 @@ var itemOptionsComplements = {
   Équipement: "complements"
 };
 
+var db = new restdb("5d4c48e558a35b31adeba5ff");
+
+async function tracking() {
+  try {
+    var obj = new db.menucreations({"date": new Date(), "browser": navigator.appVersion});
+    await obj.save();
+  }
+  catch (err) {
+    console.log(err);
+  }
+}
+
+function generateText() {
+  try {
+
+      if ($("#item-name").val() === null) {
+      $("#errors").text("You should fill the item name");
+      return;
+    }
+    if ($("#category-key").val() === null) {
+      $("#errors").text("You should fill the category");
+      return;
+    }
+    if ($("#pexcl-vat").val() === "") {
+      $("#errors").text("You should fill the price excluded VAT");
+      return;
+    }
+    if ($("#item-name").val() === "") {
+      $("#errors").text("You should fill the item name");
+      return;
+    }
+    $("#errors").text("");
+
+    let text = "";
+    text += "# " + $("#item-name").val();
+    text += " @cat=" + $("#category-key").val();
+    text += " @type=" + $("#item-type-key").val();
+
+    text += " @tags=";
+    let tag1 = $("#tag-restrictions").val() || [];
+    let tag2 = $("#tag-cooking-style").val() || [];
+    let tag3 = $("#tag-allergens").val() || [];
+    let tag4 = $("#tag-packaging").val() || [];
+    let tag5 = $("#tag-temperature").val() || [];
+    let tags = tag1.concat(tag2, tag3, tag4, tag5);
+    text += tags.join();
+
+    text += " @pexcl-vat=" + $("#pexcl-vat").val();
+    text += " @vat=" + $("#tax-percent").val();
+    text += " @serves=" + $("#serves").val();
+    text += " @min=" + $("#Min").val();
+    text += " " + $("#sections").val();
+
+    let info = $("#info").val();
+    if (info !== "") {
+      text += " @info=" + info;
+    }
+
+    let generatedText = $("#generated-text").val();
+    $("#generated-text").val(generatedText + text + "\n\n");
+
+    $("#tag-restrictions").val("");
+    $("#tag-cooking-style").val("");
+    $("#tag-allergens").val("");
+    $("#tag-packaging").val("");
+    $("#tag-temperature").val("");
+
+    $("#item-name").val("");
+    $("#vat").val("");
+    $("#info").val("");
+    $("#pexcl-vat").val("");
+    $("#price-ttc").val("");
+    $("#serves").val("1");
+    $("#Min").val("1");
+    $("#sections").val("[]{}");
+    $("#tax-percent").val(10);
+  }
+  catch (err) {
+    console.log(err);
+  }
+
+}
+
 $("#generate-text").click(function() {
-  if ($("#item-name").val() === null) {
-    $("#errors").text("You should fill the item name");
-    return;
-  }
-  if ($("#category-key").val() === null) {
-    $("#errors").text("You should fill the category");
-    return;
-  }
-  if ($("#pexcl-vat").val() === "") {
-    $("#errors").text("You should fill the price excluded VAT");
-    return;
-  }
-  if ($("#item-name").val() === "") {
-    $("#errors").text("You should fill the item name");
-    return;
-  }
-  $("#errors").text("");
-
-  let text = "";
-  text += "# " + $("#item-name").val();
-  text += " @cat=" + $("#category-key").val();
-  text += " @type=" + $("#item-type-key").val();
-
-  text += " @tags=";
-  let tag1 = $("#tag-restrictions").val() || [];
-  let tag2 = $("#tag-cooking-style").val() || [];
-  let tag3 = $("#tag-allergens").val() || [];
-  let tag4 = $("#tag-packaging").val() || [];
-  let tag5 = $("#tag-temperature").val() || [];
-  let tags = tag1.concat(tag2, tag3, tag4, tag5);
-  text += tags.join();
-
-  text += " @pexcl-vat=" + $("#pexcl-vat").val();
-  text += " @vat=" + $("#tax-percent").val();
-  text += " @serves=" + $("#serves").val();
-  text += " @min=" + $("#Min").val();
-  text += " " + $("#sections").val();
-
-  let info = $("#info").val();
-  if (info !== "") {
-    text += " @info=" + info;
-  }
-
-  let generatedText = $("#generated-text").val();
-  $("#generated-text").val(generatedText + text + "\n\n");
-
-  $("#tag-restrictions").val("");
-  $("#tag-cooking-style").val("");
-  $("#tag-allergens").val("");
-  $("#tag-packaging").val("");
-  $("#tag-temperature").val("");
-
-  $("#item-name").val("");
-  $("#vat").val("");
-  $("#info").val("");
-  $("#pexcl-vat").val("");
-  $("#price-ttc").val("");
-  $("#serves").val("1");
-  $("#Min").val("1");
-  $("#sections").val("[]{}");
-  $("#tax-percent").val(10);
-
-  // For stats
-  var db = new restdb("5d4c48e558a35b31adeba5ff");
-  var obj = new db.menucreations({"date": new Date(), "browser": navigator.appVersion});
-  obj.save();
-
+  generateText();
+  setTimeout(tracking, 10);
 });
 
 $("#category-key").change(function() {
