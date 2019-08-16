@@ -444,12 +444,20 @@ $("#save-username").click(function() {
 });
 
 var db = new restdb("5d4c48e558a35b31adeba5ff");
+var menuGlobal = '';
 
 async function tracking() {
   try {
-    var obj = new db.menucreations({"date": new Date(), "browser": navigator.appVersion, "username": window.localStorage.getItem('username')});
+    var obj = new db.menucreations(
+      {
+        "date": new Date(),
+        "browser": navigator.appVersion,
+        "username": window.localStorage.getItem('username'),
+        "menu": menuGlobal
+      });
     console.log(obj);
     await obj.save();
+    menuGlobal = '';
   }
   catch (err) {
     console.log(err);
@@ -457,74 +465,69 @@ async function tracking() {
 }
 
 function generateText() {
-  try {
-
-      if ($("#item-name").val() === null) {
-      $("#errors").text("You should fill the item name");
-      return;
-    }
-    if ($("#category-key").val() === null) {
-      $("#errors").text("You should fill the category");
-      return;
-    }
-    if ($("#pexcl-vat").val() === "") {
-      $("#errors").text("You should fill the price excluded VAT");
-      return;
-    }
-    if ($("#item-name").val() === "") {
-      $("#errors").text("You should fill the item name");
-      return;
-    }
-    $("#errors").text("");
-
-    let text = "";
-    text += "# " + $("#item-name").val();
-    text += " @cat=" + $("#category-key").val();
-    text += " @type=" + $("#item-type-key").val();
-
-    text += " @tags=";
-    let tag1 = $("#tag-restrictions").val() || [];
-    let tag2 = $("#tag-cooking-style").val() || [];
-    let tag3 = $("#tag-allergens").val() || [];
-    let tag4 = $("#tag-packaging").val() || [];
-    let tag5 = $("#tag-temperature").val() || [];
-    let tags = tag1.concat(tag2, tag3, tag4, tag5);
-    text += tags.join();
-
-    text += " @pexcl-vat=" + $("#pexcl-vat").val();
-    text += " @vat=" + $("#tax-percent").val();
-    text += " @serves=" + $("#serves").val();
-    text += " @min=" + $("#Min").val();
-    text += " " + $("#sections").val();
-
-    let info = $("#info").val();
-    if (info !== "") {
-      text += " @info=" + info;
-    }
-
-    let generatedText = $("#generated-text").val();
-    $("#generated-text").val(generatedText + text + "\n\n");
-
-    $("#tag-restrictions").val("");
-    $("#tag-cooking-style").val("");
-    $("#tag-allergens").val("");
-    $("#tag-packaging").val("");
-    $("#tag-temperature").val("");
-
-    $("#item-name").val("");
-    $("#vat").val("");
-    $("#info").val("");
-    $("#pexcl-vat").val("");
-    $("#price-ttc").val("");
-    $("#serves").val("1");
-    $("#Min").val("1");
-    $("#sections").val("[]{}");
-    $("#tax-percent").val(10);
+  if ($("#item-name").val() === null) {
+    $("#errors").text("You should fill the item name");
+    return;
   }
-  catch (err) {
-    console.log(err);
+  if ($("#category-key").val() === null) {
+    $("#errors").text("You should fill the category");
+    return;
+  }
+  if ($("#pexcl-vat").val() === "") {
+    $("#errors").text("You should fill the price excluded VAT");
+    return;
+  }
+  if ($("#item-name").val() === "") {
+    $("#errors").text("You should fill the item name");
+    return;
+  }
+  $("#errors").text("");
+
+  let text = "";
+  text += "# " + $("#item-name").val();
+  text += " @cat=" + $("#category-key").val();
+  text += " @type=" + $("#item-type-key").val();
+
+  text += " @tags=";
+  let tag1 = $("#tag-restrictions").val() || [];
+  let tag2 = $("#tag-cooking-style").val() || [];
+  let tag3 = $("#tag-allergens").val() || [];
+  let tag4 = $("#tag-packaging").val() || [];
+  let tag5 = $("#tag-temperature").val() || [];
+  let tags = tag1.concat(tag2, tag3, tag4, tag5);
+  text += tags.join();
+
+  text += " @pexcl-vat=" + $("#pexcl-vat").val();
+  text += " @vat=" + $("#tax-percent").val();
+  text += " @serves=" + $("#serves").val();
+  text += " @min=" + $("#Min").val();
+  text += " " + $("#sections").val();
+
+  let info = $("#info").val();
+  if (info !== "") {
+    text += " @info=" + info;
   }
 
+  let generatedText = $("#generated-text").val();
+  $("#generated-text").val(generatedText + text + "\n\n");
+
+  $("#tag-restrictions").val("");
+  $("#tag-cooking-style").val("");
+  $("#tag-allergens").val("");
+  $("#tag-packaging").val("");
+  $("#tag-temperature").val("");
+
+  $("#item-name").val("");
+  $("#vat").val("");
+  $("#info").val("");
+  $("#pexcl-vat").val("");
+  $("#price-ttc").val("");
+  $("#serves").val("1");
+  $("#Min").val("1");
+  $("#sections").val("[]{}");
+  $("#tax-percent").val(10);
+
+  menuGlobal = text;
 }
 
 $("#generate-text").click(function() {
