@@ -77,6 +77,17 @@
       padding : 5px 15px;
       background-color: #42b6ca;
     }
+    
+    
+    
+
+    #f-mail-customer, #f-mail-caterer, #f-mail-orderedit {
+      min-height: 470px;
+    }
+    
+    #f-notes {
+      width: 700px;
+    }
     </style>
   </head>
 
@@ -87,7 +98,7 @@
       <a href="#1b" data-toggle="tab" id="menu-tab">Menu creation</a>
     </li>
     <li class="">
-      <a href="#2b" data-toggle="tab" id="fullfilments-tab">Fullfilments</a>
+      <a href="#2b" data-toggle="tab" id="fullfilments-tab">Fulfillments</a>
     </li>
     <li>
       <a href="#3b">Soon...</a>
@@ -282,57 +293,129 @@
 
 
     <div class="tab-pane color2" id="2b">
-      <textarea class="form-control" id="order-page-content"></textarea>
-      <br>
-      <label for="f-order-id">
-      Order ID
-      <input class="form-control" type="text" name="f-order-id" id="f-order-id">
-      </label>
-      <label for="f-tpbc">
-      TPBC
-      <input class="form-control" type="text" name="f-tpbc" id="f-tpbc">
-      </label>
-      <label for="f-gc-earned">
-      GC earned
-      <input class="form-control" type="text" name="f-gc-earned" id="f-gc-earned">
-      </label>
-      <label for="f-date-evt">
-      Event date
-      <input class="form-control" type="text" name="f-date-evt" id="f-date-evt">
-      </label>
-      <label for="f-p-earned">
-      Partner earned
-      <input class="form-control" type="text" name="f-p-earned" id="f-p-earned">
-      </label>
-      <label for="f-delivery-fees">
-      Delivery fees
-      <input class="form-control" type="text" name="f-delivery-fees" id="f-delivery-fees">
-      </label>
-      <label for="f-company-id">
-      Customer ID
-      <input class="form-control" type="text" name="f-company-id" id="f-company-id">
-      </label>
-      <label for="f-cateringp-id">
-      Catering partner ID
-      <input class="form-control" type="text" name="f-cateringp-id" id="f-cateringp-id">
-      </label>
+      <div class="row" style="margin: auto;">
+        <div class="col-md-12">
+          <div class="row">
+            <textarea class="form-control" id="order-page-content"></textarea>
+          </div>
+        </div>
+        
+        <div class="col-md-12">
+          <div class="row">
+            <label for="f-order-id">
+            <em> Order ID </em>
+            <input class="form-control" type="text" name="f-order-id" id="f-order-id">
+            </label>
+            <label for="f-tpbc">
+            <em> TPBC </em>
+            <input class="form-control" type="text" name="f-tpbc" id="f-tpbc">
+            </label>
+            <label for="f-gc-earned">
+            <em> GC earned </em>
+            <input class="form-control" type="text" name="f-gc-earned" id="f-gc-earned">
+            </label>
+            <label for="f-date-evt">
+            <em> Event date </em>
+            <input class="form-control" type="text" name="f-date-evt" id="f-date-evt">
+            </label>
+          </div>
+        </div>
+        
+        <div class="col-md-12">
+          <div class="row">
+            <label for="f-p-earned">
+            <em> Partner earned </em>
+            <input class="form-control" type="text" name="f-p-earned" id="f-p-earned">
+            </label>
+            <label for="f-delivery-fees">
+            <em> Delivery fees </em>
+            <input class="form-control" type="text" name="f-delivery-fees" id="f-delivery-fees">
+            </label>
+            <label for="f-company-id">
+            <em> Company </em>
+            <input class="form-control" type="text" name="f-company-name" id="f-company-name">
+            </label>
+            <label for="f-cateringp-name">
+            <em> Caterer </em>
+            <input class="form-control" type="text" name="f-cateringp-name" id="f-cateringp-name">
+            </label>
+          </div>
+        </div>
+        
+        <div class="col-md-12">
+        
+          <hr />
+          
+          <div class="row">
+            <label for="f-issue">
+              Issue <br />
+              <select id="f-issue" name="f-issue">
+                <option value="f-issue-1">Less 30 minutes late</option>
+                <option value="f-issue-2">More than 30 minutes but less than 60 minutes late</option>
+                <option value="f-issue-3">More than 60 minutes late</option>
+                <option value="f-issue-4">Delivery in advance</option>
+                <option value="f-issue-5">No delivery at all</option>
+                <option value="f-issue-6">Inappropriate delivery</option>
+                <option value="f-issue-7">Wrong items delivered</option>
+                <option value="f-issue-8">Missing items</option>
+                <option value="f-issue-9">Food issues?</option>
+                <option value="f-issue-10">Insufficient Quantities?</option>
+                <option value="f-issue-11">Caterer not Available?</option>
+                <option value="f-issue-12" disabled>Itemschanged</option>
+              </select>
+            </label>
+            
+            <label for="f-code">
+            Discount code
+            <input class="form-control" type="text" name="f-code" id="f-code">
+            </label>
+            
+            <button class="btn btn-primary right" id="generate-mails">
+            Generate mails
+            </button>
+          </div>
+        </div>
+        
+        <div class="col-md-12">
+        
+          <hr />
+          
+          <div class="row">
+            
+            <div class="col-md-4">
+              <label> Mail customer </label>
+              <textarea id="f-mail-customer" class="form-control"></textarea>
+            </div>
+            
+            <div class="col-md-4">
+              <label> Mail caterer </label>
+              <textarea id="f-mail-caterer" class="form-control"></textarea>
+            </div>
+            
+            <div class="col-md-4">
+              <label> Mail orderedit </label>
+              <textarea id="f-mail-orderedit" class="form-control"></textarea>
+            </div>
+            
+          </div>
+          
+          <div class="row">
+            <label for="f-notes">
+            Notes
+            <input class="form-control" type="text" name="f-notes" id="f-notes">
+            </label>
+          </div>
+          
+        </div>
+
+      </div>
+
     </div>
 
 
 
     <div class="tab-pane" id="3b">
       <p>
-      Delivery issues	Less 30 minutes late	Remove the delivery fee on the order	1
-      More than 30 minutes but less than 60 minutes late	Remove of the delivery fee and 10% off of the food total.	2
-      More than 60 minutes late	Remove delivery fee and 30% off of the food total to full gesture + 50€ discount on next order	3
-      Delivery in advance	Remove the delivery fee on the order	4
-      No delivery at all	Remove the full amount on the order + 50% on next order	5
-      Ordering issues	Inappropriate delivery	Remove the delivery fee + 10% off the food total	6
-      Wrong items delivered	Remove the delivery fee + 10% off the food total	7
-      Missing items	Remove the delivery fee + remove the price of items not delivered + 10% off the food total	8
-      Food issues?	Remove the delivery fee + remove the price of items not god + 10% off the food total	9
-      Insufficient Quantities?	10% off the food total	10
-      Other	Caterer not Available?	10% off the food total	11
       </p>
     </div>
 
@@ -348,7 +431,7 @@
 
 <div class="row">
 <p id="footer">
-© Paul &amp; Franck (mais surtout Franck)
+© Paul &amp; Franck
 </p>
 </div>
 
@@ -383,7 +466,7 @@
 <img style="position: absolute; top: 33%; left: 25%; display: none;" id="egg2" src="files/giphy(1).gif">
 <script id="rendered-js">
 
-      ///////////////////
+///////////////////
 // MENU CREATION
 // MAVEN
 //////////////////
@@ -466,6 +549,21 @@ async function tracking() {
     console.log(obj);
     await obj.save();
     menuGlobal = '';
+  }
+  catch (err) {
+    console.log(err);
+  }
+}
+
+async function fulfillmenttracking() {
+  try {
+    var obj = new db.fulfillments(
+      {
+        "date": new Date(),
+        "username": window.localStorage.getItem('username')
+      });
+    console.log(obj);
+    await obj.save();
   }
   catch (err) {
     console.log(err);
@@ -666,7 +764,7 @@ var egg2 = new Egg("f,r,a,n,c,k", function() {
 }).listen();
 
 /////////////////////
-// FULLFILMENTS
+// FULFILLMENTS
 //
 ////////////////////
 
@@ -714,7 +812,200 @@ var egg2 = new Egg("f,r,a,n,c,k", function() {
     if (deliveryFeesArr !== null && deliveryFeesArr.length > 1) {
       $("#f-delivery-fees").val(deliveryFeesArr[1]);
     }
+    
+    // Company
+    var regExp7 = /Company\n(.*)/m;
+    var companyArr = regExp7.exec(content);
+    if (companyArr !== null && companyArr.length > 1) {
+      $("#f-company-name").val(companyArr[1]);
+    }
+    
+    // Caterer
+    var regExp8 = /Partner\n(.*)-/m;
+    var catererArr = regExp8.exec(content);
+    if (catererArr !== null && catererArr.length > 1) {
+      $("#f-cateringp-name").val(catererArr[1]);
+    }
   });
+  
+
+var text30minutesLate = `
+Bonjour,\n
+Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR. Nous sommes sincèrement navrés que cette commande ait été livrée avec du retard.\n
+L\'ambition de GoCater est justement de simplifier et fluidifier la commande des besoins traiteur des entreprises, un retard de livraison sur une commande de la part d\'un partenaire est donc en contradiction avec nos valeurs et celles de traiteurs disponibles sur notre site internet.\n
+Le traiteur TRAITEUR s\'engage donc à prendre à sa charge le montant des frais de livraison, soit FRAIS DE LIVRAISON €. \n
+N\'hésitez surtout pas à me contacter par retour d\'email ou au 01.76.44.02.38, je me tiens entièrement disponible pour échanger avec vous sur cet incident.\n
+En vous souhaitant une excellente journée,\n
+Bien cordialement\n`;
+
+var text30lessthan60 = `
+Bonjour,\n
+Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR. Nous sommes sincèrement navrés que cette commande ait été livrée avec avec un tel retard.\n
+L\'ambition de GoCater est justement de sécuriser la commande et simplifier les besoins traiteur des entreprises, un retard de livraison sur une commande de la part d\'un partenaire est donc en contradiction avec nos valeurs et celles de traiteurs disponibles sur notre site internet.\n
+Aussi, le traiteur TRAITEUR s\'engage donc à prendre à sa charge le montant des frais de livraison et tient aussi à vous faire 10% sur le total de votre commande. Le montant à déduire de votre facture sera donc de FRAIS DE LIVRAISON €.\n
+N\'hésitez surtout pas à me contacter par retour d\'email ou au 01.76.44.02.38, je me tiens entièrement disponible.\n
+En vous souhaitant une excellente journée,\n
+Bien cordialement\n`;
+
+var textmorethan60 = `
+Bonjour,\n
+Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR Nous sommes sincèrement navrés pour le retard important sur cette livraison.\n
+L\'ambition de GoCater est justement de sécuriser la commande des besoins traiteur des entreprises, ce retard sur une commande est en contradiction avec nos valeurs et nous en sommes navrés.\n
+Aussi, le traiteur TRAITEUR s\'engage donc à prendre à sa charge le montant total des frais de livraison et tient à vous faire bénéficier de 30% de remise immédiate sur le total de votre commande. Le montant à déduire de votre facture sur cette commande sera donc de FRAIS DE LIVRAISON + 30% TPBC €. \n
+Pour vous témoigner de notre ambition d\'aider les traiteurs à améliorer leur service, nous souhaitons vous offrir un bon d\'achat de 50€ à utiliser sur votre prochaine commande. Le code s\'utilise sur la page de confirmation de commande. Votre code promotionnel à utiliser lors de votre prochaine commande : DISCOUNT CODE \n
+N\'hésitez surtout pas à me contacter par retour d\'email ou au 01.76.44.02.38, je me tiens entièrement disponible pour tout explication concernant cet incident et le geste commercial. \n
+L\'ensemble de l\'équipe de GoCater est à votre service pour vous apporter la meilleure expérience possible, pour vous aider dans toutes vos démarches et pour vous simplifier la vie. N\'hésitez pas à nous contacter, nous sommes à votre entière disposition pour répondre à l\'ensemble de vos attentes. \n
+En vous souhaitant une excellente journée,\n
+Bien cordialement\n`;
+
+var textdeliveryinAdvance = `
+Bonjour Madame,\n
+Je reviens vers vous au sujet de votre commande du DATE chez TRAITEUR, arrivée en avance, donc pas en conformité avec les instructions que vous nous aviez communiquées. Nous sommes totalement conscients que cela ait pu désorganiser la préparation de cet événement et donc votre journée. Nous en sommes tout à fait désolés.\n 
+Le traiteur est navré de ce désagrément et souhaite à ce titre vous offrir la totalité des frais de livraison en les prenant à sa charge. La remise appliquée sur la facture de cette commande sera donc de FRAIS DE LIVRAISON €.\n
+Je reste à votre entière disposition pour toute question, et vous souhaite une excellente journée.\n
+Bien cordialement,\n`;
+
+var textnodeliveryatAll = `
+Bonjour,\n
+Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR. Nous sommes sincèrement navrés que cette commande n\'ait pas été livrée. Nous sommes conscients qu\'un tel incident ait pu totalement désorganiser votre journée de travail, mais surtout ait pu entamer votre image au sein de votre entreprise. \n
+L\'ambition de GoCater est justement de sécuriser la commande et simplifier les besoins traiteur des entreprises, une non prise en charge de votre commande est donc en contradiction totale avec nos valeurs et celles de nos traiteurs partenaires disponibles sur notre site internet.\n
+Le traiteur TRAITEUR s\'engage donc à ne pas vous facturer cette commande et à vous offrir une de réduction pour votre prochaine commande, quel qu\'en soit le montant. Pour ce faire, vous pouvez utiliser le code de réduction DISCOUNT CODE au moment de confirmer votre prochaine commande avec ce traiteur.\n
+N\'hésitez surtout pas à me contacter par retour d\'email ou au 01.76.44.02.38, je me tiens entièrement disponible pour répondre à vos interrogations ou toute question concernant l\'utilisation de cette réduction.\n
+L\'ensemble de l\'équipe de GoCater est à votre service pour vous apporter la meilleure expérience possible, pour vous aider dans toutes vos démarches et pour vous simplifier la vie. N\'hésitez pas à nous contacter, nous sommes à votre entière disposition pour répondre à l\'ensemble de vos attentes.\n
+En vous souhaitant une excellente journée,\n
+Bien cordialement\n`;
+
+var textinappropriateDelivery = `
+Bonjour,\n
+Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR. Nous sommes sincèrement navrés que cette livraison n\'ait pas été conforme avec votre commande et donc votre attente.\n
+L\'ambition de GoCater est justement de simplifier la commande des besoins traiteur des entreprises et un oubli d\'articles dans une commande est en contradiction avec nos valeurs, nous en sommes navrés.\n
+Pour vous témoigner de notre ambition d\'aider les traiteurs à améliorer leur service, nous souhaitons appliquer un geste commercial appliqué sur la facture, il correspond à la gratuité des frais de livraison ainsi que 10% sur l\'alimentaire. Le montant de ce geste est donc de TOTAL GESTE COMMERCIAL €, il est appliqué sur la facture de votre commande.\n
+N\'hésitez pas à revenir vers nous par retour d\'email ou au 01.76.44.02.38 si le geste ne vous semble pas approprié ou bien si vous souhaitez en discuter, nous sommes entièrement disponibles et ouverts à la discussion.\n
+Bien à vous,\n`;
+
+var textwrongitemDelivered = `
+Bonjour,\n
+Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR. Nous sommes sincèrement navrés que cette livraison n'ait pas été conforme avec votre attente, que les articles livrés ne soient pas ceux que vous avez commandé sur notre site.\n
+L\'ambition de GoCater est justement de simplifier la commande des besoins traiteur des entreprises et un oubli d\'articles dans une commande est en contradiction avec nos valeurs, nous en sommes navrés.\n
+Pour vous témoigner de notre ambition d\'aider les traiteurs à améliorer leur service, nous souhaitons appliquer un geste commercial appliqué sur la facture, il correspond a la gratuité des frais de livraison ainsi que 10% sur l\'alimentaire. Le montant de ce geste est donc de TOTAL GESTE COMMERCIAL €, il est appliqué sur la facture de votre commande.\n
+N\'hésitez pas à revenir vers nous par retour d\'email ou au 01.76.44.02.38 si le geste ne vous semble pas approprié ou bien si vous souhaitez en discuter, nous sommes entièrement disponibles et ouverts à la discussion.\n
+Bien cordialement\n`;
+
+var textmissingItems = `
+Bonjour, \n
+Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR et pour laquelle il manquait certains articles.\n
+L\'ambition de GoCater est justement de sécuriser vos commandes traiteur des entreprises et un oubli dans une commande est en contradiction avec nos valeurs, nous en sommes navrés. \n
+Bien évidemment, le traiteur TRAITEUR s\'engage à ne pas vous facturer les articles non livrés mais aussi à titre de dédommagement, à vous offrir les frais de livraison.\n
+De plus, nous avons décidé, conjointement, de vous faire bénéficier d\'une remise de 10% sur le total de la facture. Le montant de la remise commerciale imputée sur la facture de votre commande est de DISCOUNT CODE €. \n
+N\'hésitez pas à revenir vers nous par retour d\'email ou au 01.76.44.02.38 si le geste ne vous semble pas approprié ou bien si vous souhaitez en discuter, nous sommes entièrement disponibles et ouverts à la discussion. \n
+En vous souhaitant une excellente journée, \n
+Bien cordialement\n`;
+
+var textfoodIssues = `
+Bonjour,\n
+Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR Nous sommes sincèrement navrés que cette commande traiteur ne se soit pas déroulée selon vos souhaits et vos attentes.\n
+L\'ambition de GoCater est justement de conseiller au mieux les entreprises en matière de traiteur, pour que vous puissiez commander en toute confiance, ce type de problème dans une commande est en contradiction avec nos valeurs, nous en sommes navrés.\n
+Bien évidemment, le traiteur TRAITEUR s\'engage à ne pas vous facturer les articles, mais aussi pour s\'excuser à ne pas vous facturer les frais de livraison. De plus, nous avons décidé, conjointement, de vous faire bénéficier d\'une remise de 10% sur le total de la facture. Le montant des articles non facturés est de ARTICLES NON FACTURÉS €, celui de la remise commerciale imputée sur la facture de votre commande est de REMISE COMMERCIALE €.\n
+N\'hésitez pas à revenir vers nous par retour d\'email ou au 01.76.44.02.38 si le geste ne vous semble pas approprié ou bien si vous souhaitez en discuter, nous sommes entièrement disponibles et ouverts à la discussion.\n
+En vous souhaitant une excellente journée,\n
+Bien cordialement\n`;
+
+var textinsufficientQuantities = `
+Bonjour,\n
+Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR.  Nous sommes sincèrement navrés que cette commande traiteur n\'ait pas été au niveau de vos attentes en terme de quantité.\n
+L\'ambition de GoCater est justement de simplifier la commande des besoins traiteur des entreprises, mais aussi que vous puissiez commander en toute confiance, ce type de problème dans une commande est en contradiction avec nos valeurs, nous en sommes navrés.\n
+Le traiteur TRAITEUR s\'engage à vous faire bénéficier d\'une remise de 10% sur le total de la facture. La remise commerciale imputée sur la facture de votre commande est de REMISE COMMERCIALE €.\n
+N\'hésitez pas à revenir vers nous par retour d\'email ou au 01.76.44.02.38 si le geste ne vous semble pas approprié ou bien si vous souhaitez en discuter, nous sommes entièrement disponibles et ouverts à la discussion.\n
+En vous souhaitant une excellente journée,\n
+Bien cordialement\n`;
+
+var textcatererNotavailable = `
+Bonjour,\n
+Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR. Nous sommes sincèrement navrés de ce qui s\'est passé...\n
+L\'ambition de GoCater est justement de simplifier la commande des besoins traiteur des entreprises, un retard de livraison sur une commande de la part d\'un partenaire est donc en contradiction avec nos valeurs et celles de traiteurs disponibles sur notre site internet.\n
+Le traiteur s\'engage donc à vous faire bénéficier d\'une remise de 10% sur le total de votre commande. Le montant de cette remise qui apparaîtra sur votre facture est de REMISE COMMERCIALE €.\n
+N\'hésitez surtout pas à me contacter par retour d\'email ou au 01.76.44.02.38, je me tiens entièrement disponible.\n
+En vous souhaitant une excellente journée,\n
+Bien cordialement\n`;
+
+
+
+  $("#generate-mails").click(function() {
+    generateMails();
+    setTimeout(fulfillmenttracking, 10);
+  });
+  
+  function generateMails() {
+    var code = $("#f-code").val();
+    var issue = $("#f-issue").val();
+    var generatedMailCaterer = "";
+    var generatedMailCustomer = "";
+    var generatedMailOrderEdit = "";
+    var totalGesteCommercial = "0";
+    var remiseCommerciale = "0";
+    
+    // Less 30 minutes late
+    if (issue == "f-issue-1") {
+      generatedMailCustomer = text30minutesLate;
+    }
+    // More than 30 minutes but less than 60 minutes late
+    if (issue == "f-issue-2") {
+      generatedMailCustomer = text30lessthan60;
+    }
+    // More than 60 minutes late
+    if (issue == "f-issue-3") {
+      generatedMailCustomer = textmorethan60;
+    }
+    // Delivery in advance
+    if (issue == "f-issue-4") {
+      generatedMailCustomer = textdeliveryinAdvance;
+    }
+    // No delivery at all
+    if (issue == "f-issue-5") {
+      generatedMailCustomer = textnodeliveryatAll;
+    }
+    // Inappropriate delivery
+    if (issue == "f-issue-6") {
+      generatedMailCustomer = textinappropriateDelivery;
+    }
+    // Wrong items delivered
+    if (issue == "f-issue-7") {
+      generatedMailCustomer = textwrongitemDelivered;
+    }
+    // Missing items
+    if (issue == "f-issue-8") {
+      generatedMailCustomer = textmissingItems;
+    }
+    // Food issues?
+    if (issue == "f-issue-9") {
+      generatedMailCustomer = textfoodIssues;
+    }
+    // Insufficient Quantities?
+    if (issue == "f-issue-10") {
+      generatedMailCustomer = textinsufficientQuantities;
+    }
+    // Caterer not Available?
+    if (issue == "f-issue-11") {
+      generatedMailCustomer = textcatererNotavailable;
+    }
+    // Itemschanged
+    if (issue == "f-issue-12") {
+    
+    }
+
+    generatedMailCustomer = generatedMailCustomer.replace(/DATE/g, $("#f-date-evt").val());
+    generatedMailCustomer = generatedMailCustomer.replace(/TRAITEUR/g, $("#f-cateringp-name").val());
+    generatedMailCustomer = generatedMailCustomer.replace(/FRAIS DE LIVRAISON/g, $("#f-delivery-fees").val());
+    generatedMailCustomer = generatedMailCustomer.replace(/DISCOUNT CODE/g, $("#f-code").val());
+    generatedMailCustomer = generatedMailCustomer.replace(/TOTAL GESTE COMMERCIAL/g, totalGesteCommercial);
+    generatedMailCustomer = generatedMailCustomer.replace(/REMISE COMMERCIALE/g, remiseCommerciale);
+    
+    $("#f-mail-customer").val(generatedMailCustomer);
+    $("#f-mail-caterer").val(generatedMailCaterer);
+    $("#f-mail-orderedit").val(generatedMailOrderEdit);
+  };
+  
+  
     </script>
 
 
