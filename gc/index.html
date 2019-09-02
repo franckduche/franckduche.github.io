@@ -828,102 +828,113 @@ var egg2 = new Egg("f,r,a,n,c,k", function() {
     }
   });
   
-
-var text30minutesLate = `
+var text30MinutesLate = `
 Bonjour,\n
 Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR. Nous sommes sincèrement navrés que cette commande ait été livrée avec du retard.\n
-L\'ambition de GoCater est justement de simplifier et fluidifier la commande des besoins traiteur des entreprises, un retard de livraison sur une commande de la part d\'un partenaire est donc en contradiction avec nos valeurs et celles de traiteurs disponibles sur notre site internet.\n
-Le traiteur TRAITEUR s\'engage donc à prendre à sa charge le montant des frais de livraison, soit FRAIS DE LIVRAISON €. \n
+L\'ambition de GoCater est justement de simplifier et de fluidifier la commande des besoins traiteur des entreprises, un retard de livraison sur une commande de la part d\'un partenaire est donc en contradiction avec nos valeurs et celles de traiteurs disponibles sur notre site internet.\n
+A titre de dédommagement, le traiteur TRAITEUR s\'engage donc à prendre à sa charge le montant des frais de livraison, soit FRAIS DE LIVRAISON €. \n
 N\'hésitez surtout pas à me contacter par retour d\'email ou au 01.76.44.02.38, je me tiens entièrement disponible pour échanger avec vous sur cet incident.\n
 En vous souhaitant une excellente journée,\n
 Bien cordialement\n`;
 
-var text30lessthan60 = `
+var text30LessThan60 = `
 Bonjour,\n
 Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR. Nous sommes sincèrement navrés que cette commande ait été livrée avec avec un tel retard.\n
 L\'ambition de GoCater est justement de sécuriser la commande et simplifier les besoins traiteur des entreprises, un retard de livraison sur une commande de la part d\'un partenaire est donc en contradiction avec nos valeurs et celles de traiteurs disponibles sur notre site internet.\n
-Aussi, le traiteur TRAITEUR s\'engage donc à prendre à sa charge le montant des frais de livraison et tient aussi à vous faire 10% sur le total de votre commande. Le montant à déduire de votre facture sera donc de FRAIS DE LIVRAISON €.\n
+Aussi, le traiteur TRAITEUR s\'engage donc à prendre à sa charge le montant des frais de livraison et tient aussi à vous faire 10% sur le total de votre commande. Le montant à déduire de votre facture sera donc de FRAIS DE LIVRAISON + 10% PARTNER EARNED €.\n
 N\'hésitez surtout pas à me contacter par retour d\'email ou au 01.76.44.02.38, je me tiens entièrement disponible.\n
 En vous souhaitant une excellente journée,\n
 Bien cordialement\n`;
 
-var textmorethan60 = `
+var textMoreThan60 = `
 Bonjour,\n
 Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR Nous sommes sincèrement navrés pour le retard important sur cette livraison.\n
-L\'ambition de GoCater est justement de sécuriser la commande des besoins traiteur des entreprises, ce retard sur une commande est en contradiction avec nos valeurs et nous en sommes navrés.\n
-Aussi, le traiteur TRAITEUR s\'engage donc à prendre à sa charge le montant total des frais de livraison et tient à vous faire bénéficier de 30% de remise immédiate sur le total de votre commande. Le montant à déduire de votre facture sur cette commande sera donc de FRAIS DE LIVRAISON + 30% TPBC €. \n
-Pour vous témoigner de notre ambition d\'aider les traiteurs à améliorer leur service, nous souhaitons vous offrir un bon d\'achat de 50€ à utiliser sur votre prochaine commande. Le code s\'utilise sur la page de confirmation de commande. Votre code promotionnel à utiliser lors de votre prochaine commande : DISCOUNT CODE \n
+L\'ambition de GoCater est justement de sécuriser la commande des besoins traiteur des entreprises, ce retard sur une commande est en contradiction avec nos valeurs et nous nous en excusons.\n
+Aussi, le traiteur TRAITEUR s\'engage donc à prendre à sa charge le montant total des frais de livraison et tient à vous faire bénéficier de 30% de remise immédiate sur le total de votre commande. Le montant à déduire de votre facture sur cette commande sera donc de FRAIS DE LIVRAISON + 30% PARTNER EARNED €. \n
+Pour vous témoigner de notre ambition d\'aider les traiteurs à améliorer leur service, nous souhaitons également vous offrir un bon d\'achat de DISCOUNT CODE VALUE € à utiliser sur votre prochaine commande. Le code s\'utilise sur la page de confirmation de commande.\n
+Votre code promotionnel à utiliser lors de votre prochaine commande est: DISCOUNT CODE \n
 N\'hésitez surtout pas à me contacter par retour d\'email ou au 01.76.44.02.38, je me tiens entièrement disponible pour tout explication concernant cet incident et le geste commercial. \n
-L\'ensemble de l\'équipe de GoCater est à votre service pour vous apporter la meilleure expérience possible, pour vous aider dans toutes vos démarches et pour vous simplifier la vie. N\'hésitez pas à nous contacter, nous sommes à votre entière disposition pour répondre à l\'ensemble de vos attentes. \n
 En vous souhaitant une excellente journée,\n
 Bien cordialement\n`;
 
-var textdeliveryinAdvance = `
+var textDeliveryInAdvance = `
 Bonjour Madame,\n
-Je reviens vers vous au sujet de votre commande du DATE chez TRAITEUR, arrivée en avance, donc pas en conformité avec les instructions que vous nous aviez communiquées. Nous sommes totalement conscients que cela ait pu désorganiser la préparation de cet événement et donc votre journée. Nous en sommes tout à fait désolés.\n 
+Je reviens vers vous au sujet de votre commande du DATE chez TRAITEUR, arrivée en avance et qui n’est donc pas en conformité avec les instructions que vous nous aviez communiquées. Nous sommes totalement conscients que cela ait pu désorganiser la préparation de cet événement et donc votre journée. Nous en sommes tout à fait désolés.\n 
 Le traiteur est navré de ce désagrément et souhaite à ce titre vous offrir la totalité des frais de livraison en les prenant à sa charge. La remise appliquée sur la facture de cette commande sera donc de FRAIS DE LIVRAISON €.\n
 Je reste à votre entière disposition pour toute question, et vous souhaite une excellente journée.\n
 Bien cordialement,\n`;
 
-var textnodeliveryatAll = `
+var textNoDeliveryAtAll = `
 Bonjour,\n
-Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR. Nous sommes sincèrement navrés que cette commande n\'ait pas été livrée. Nous sommes conscients qu\'un tel incident ait pu totalement désorganiser votre journée de travail, mais surtout ait pu entamer votre image au sein de votre entreprise. \n
+Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR. Nous sommes sincèrement navrés que cette commande n\'ait pas été livrée. Nous sommes conscients des conséquences d\’un tel incident sur votre l\’organisation de votre journée de travail mais également sur votre image au sein de l\’entreprise.\n
 L\'ambition de GoCater est justement de sécuriser la commande et simplifier les besoins traiteur des entreprises, une non prise en charge de votre commande est donc en contradiction totale avec nos valeurs et celles de nos traiteurs partenaires disponibles sur notre site internet.\n
-Le traiteur TRAITEUR s\'engage donc à ne pas vous facturer cette commande et à vous offrir une de réduction pour votre prochaine commande, quel qu\'en soit le montant. Pour ce faire, vous pouvez utiliser le code de réduction DISCOUNT CODE au moment de confirmer votre prochaine commande avec ce traiteur.\n
+Le traiteur TRAITEUR s\'engage donc à ne pas vous facturer cette commande et à vous offrir une remise sur votre prochaine commande. Pour ce faire, vous pouvez utiliser le code de réduction DISCOUNT CODE au moment de confirmer votre prochaine commande avec ce traiteur.\n
 N\'hésitez surtout pas à me contacter par retour d\'email ou au 01.76.44.02.38, je me tiens entièrement disponible pour répondre à vos interrogations ou toute question concernant l\'utilisation de cette réduction.\n
 L\'ensemble de l\'équipe de GoCater est à votre service pour vous apporter la meilleure expérience possible, pour vous aider dans toutes vos démarches et pour vous simplifier la vie. N\'hésitez pas à nous contacter, nous sommes à votre entière disposition pour répondre à l\'ensemble de vos attentes.\n
 En vous souhaitant une excellente journée,\n
 Bien cordialement\n`;
 
-var textinappropriateDelivery = `
+var textInappropriateDelivery = `
 Bonjour,\n
-Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR. Nous sommes sincèrement navrés que cette livraison n\'ait pas été conforme avec votre commande et donc votre attente.\n
+Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR. Nous sommes sincèrement navrés que cette livraison n\'ait pas été en adéquation avec votre commande et donc avec vos attentes.\n
 L\'ambition de GoCater est justement de simplifier la commande des besoins traiteur des entreprises et un oubli d\'articles dans une commande est en contradiction avec nos valeurs, nous en sommes navrés.\n
-Pour vous témoigner de notre ambition d\'aider les traiteurs à améliorer leur service, nous souhaitons appliquer un geste commercial appliqué sur la facture, il correspond à la gratuité des frais de livraison ainsi que 10% sur l\'alimentaire. Le montant de ce geste est donc de TOTAL GESTE COMMERCIAL €, il est appliqué sur la facture de votre commande.\n
+Pour vous témoigner de notre ambition d\'aider les traiteurs à améliorer leur service, nous souhaitons appliquer un geste commercial sur la facture, il correspond à la gratuité des frais de livraison ainsi que 10% sur l\'alimentaire. Le montant de ce geste est donc de TOTAL GESTE COMMERCIAL €.\n
 N\'hésitez pas à revenir vers nous par retour d\'email ou au 01.76.44.02.38 si le geste ne vous semble pas approprié ou bien si vous souhaitez en discuter, nous sommes entièrement disponibles et ouverts à la discussion.\n
 Bien à vous,\n`;
 
-var textwrongitemDelivered = `
+var textWrongItemDelivered = `
 Bonjour,\n
-Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR. Nous sommes sincèrement navrés que cette livraison n'ait pas été conforme avec votre attente, que les articles livrés ne soient pas ceux que vous avez commandé sur notre site.\n
-L\'ambition de GoCater est justement de simplifier la commande des besoins traiteur des entreprises et un oubli d\'articles dans une commande est en contradiction avec nos valeurs, nous en sommes navrés.\n
-Pour vous témoigner de notre ambition d\'aider les traiteurs à améliorer leur service, nous souhaitons appliquer un geste commercial appliqué sur la facture, il correspond a la gratuité des frais de livraison ainsi que 10% sur l\'alimentaire. Le montant de ce geste est donc de TOTAL GESTE COMMERCIAL €, il est appliqué sur la facture de votre commande.\n
+Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR. Nous sommes sincèrement navrés que cette livraison n'ait pas été en adéquation avec vos attentes et que les articles livrés ne soient pas ceux que vous avez commandé sur notre site.\n
+L\'ambition de GoCater est justement de simplifier la commande des besoins traiteur des entreprises et un oubli d\'articles dans une commande est en contradiction avec nos valeurs, nous en sommes désolés.\n
+Pour vous témoigner de notre ambition d\'aider les traiteurs à améliorer leur service, nous souhaitons appliquer un geste commercial sur la facture, il correspond à la gratuité des frais de livraison ainsi que 10% sur l\'alimentaire. Le montant de ce geste est donc de TOTAL GESTE COMMERCIAL €.\n
 N\'hésitez pas à revenir vers nous par retour d\'email ou au 01.76.44.02.38 si le geste ne vous semble pas approprié ou bien si vous souhaitez en discuter, nous sommes entièrement disponibles et ouverts à la discussion.\n
 Bien cordialement\n`;
 
-var textmissingItems = `
+var textMissingItems = `
 Bonjour, \n
 Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR et pour laquelle il manquait certains articles.\n
 L\'ambition de GoCater est justement de sécuriser vos commandes traiteur des entreprises et un oubli dans une commande est en contradiction avec nos valeurs, nous en sommes navrés. \n
 Bien évidemment, le traiteur TRAITEUR s\'engage à ne pas vous facturer les articles non livrés mais aussi à titre de dédommagement, à vous offrir les frais de livraison.\n
-De plus, nous avons décidé, conjointement, de vous faire bénéficier d\'une remise de 10% sur le total de la facture. Le montant de la remise commerciale imputée sur la facture de votre commande est de DISCOUNT CODE €. \n
+De plus, nous avons décidé, conjointement, de vous faire bénéficier d\'une remise de 10% sur le total de la facture. Le montant de la remise commerciale imputée sur la facture de votre commande est de 10% PARTNER EARNED €. \n
 N\'hésitez pas à revenir vers nous par retour d\'email ou au 01.76.44.02.38 si le geste ne vous semble pas approprié ou bien si vous souhaitez en discuter, nous sommes entièrement disponibles et ouverts à la discussion. \n
 En vous souhaitant une excellente journée, \n
 Bien cordialement\n`;
 
-var textfoodIssues = `
+var textFoodIssues = `
 Bonjour,\n
 Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR Nous sommes sincèrement navrés que cette commande traiteur ne se soit pas déroulée selon vos souhaits et vos attentes.\n
-L\'ambition de GoCater est justement de conseiller au mieux les entreprises en matière de traiteur, pour que vous puissiez commander en toute confiance, ce type de problème dans une commande est en contradiction avec nos valeurs, nous en sommes navrés.\n
+L\'ambition de GoCater est justement de conseiller au mieux les entreprises en matière de traiteur, pour que vous puissiez commander en toute confiance, ce type de problème dans une commande est en contradiction avec nos valeurs, nous en sommes désolés.\n
 Bien évidemment, le traiteur TRAITEUR s\'engage à ne pas vous facturer les articles, mais aussi pour s\'excuser à ne pas vous facturer les frais de livraison. De plus, nous avons décidé, conjointement, de vous faire bénéficier d\'une remise de 10% sur le total de la facture. Le montant des articles non facturés est de ARTICLES NON FACTURÉS €, celui de la remise commerciale imputée sur la facture de votre commande est de REMISE COMMERCIALE €.\n
 N\'hésitez pas à revenir vers nous par retour d\'email ou au 01.76.44.02.38 si le geste ne vous semble pas approprié ou bien si vous souhaitez en discuter, nous sommes entièrement disponibles et ouverts à la discussion.\n
 En vous souhaitant une excellente journée,\n
 Bien cordialement\n`;
 
-var textinsufficientQuantities = `
+var textInsufficientQuantities = `
 Bonjour,\n
 Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR.  Nous sommes sincèrement navrés que cette commande traiteur n\'ait pas été au niveau de vos attentes en terme de quantité.\n
 L\'ambition de GoCater est justement de simplifier la commande des besoins traiteur des entreprises, mais aussi que vous puissiez commander en toute confiance, ce type de problème dans une commande est en contradiction avec nos valeurs, nous en sommes navrés.\n
-Le traiteur TRAITEUR s\'engage à vous faire bénéficier d\'une remise de 10% sur le total de la facture. La remise commerciale imputée sur la facture de votre commande est de REMISE COMMERCIALE €.\n
+A titre de dédommagement, nous souhaitons vous offrir un bon d\'achat de DISCOUNT CODE VALUE € à utiliser sur votre prochaine commande. Le code s\'utilise sur la page de confirmation de commande.\n
+Votre code promotionnel à utiliser lors de votre prochaine commande est: DISCOUNT CODE \n
 N\'hésitez pas à revenir vers nous par retour d\'email ou au 01.76.44.02.38 si le geste ne vous semble pas approprié ou bien si vous souhaitez en discuter, nous sommes entièrement disponibles et ouverts à la discussion.\n
 En vous souhaitant une excellente journée,\n
 Bien cordialement\n`;
 
-var textcatererNotavailable = `
+var textCatererNotAvailable = `
 Bonjour,\n
-Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR. Nous sommes sincèrement navrés de ce qui s\'est passé...\n
-L\'ambition de GoCater est justement de simplifier la commande des besoins traiteur des entreprises, un retard de livraison sur une commande de la part d\'un partenaire est donc en contradiction avec nos valeurs et celles de traiteurs disponibles sur notre site internet.\n
-Le traiteur s\'engage donc à vous faire bénéficier d\'une remise de 10% sur le total de votre commande. Le montant de cette remise qui apparaîtra sur votre facture est de REMISE COMMERCIALE €.\n
+Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR. Nous sommes sincèrement navrés pour la non disponibilité du traiteur...\n
+L\'ambition de GoCater est justement de simplifier la commande des besoins traiteur des entreprises, une erreur de disponibilité est donc en contradiction avec nos valeurs et celles de traiteurs disponibles sur notre site internet.\n
+A titre de dédommagement, nous souhaitons vous offrir un bon d\'achat de DISCOUNT CODE VALUE € à utiliser sur votre prochaine commande. Le code s\'utilise sur la page de confirmation de commande.\n
+Votre code promotionnel à utiliser lors de votre prochaine commande est: DISCOUNT CODE \n
+N\'hésitez surtout pas à me contacter par retour d\'email ou au 01.76.44.02.38, je me tiens entièrement disponible.\n
+En vous souhaitant une excellente journée,\n
+Bien cordialement\n`;
+
+var textItemChanged = `
+Bonjour,\n
+Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR. Nous sommes sincèrement désolés pour le changement de produits de dernière minute...\n
+L\'ambition de GoCater est justement de simplifier la commande des besoins traiteur des entreprises, et nous nous efforçons au maximum de maintenir le meilleur niveau de service. Il arrive cependant que certains produits ne soient plus disponibles et nous nous donnons pour mission de vous trouver la meilleur alternative possible afin que votre événement n\’en soit pas affecté.\n
+A titre de dédommagement, nous souhaitons vous offrir un bon d\'achat de DISCOUNT CODE VALUE € à utiliser sur votre prochaine commande. Le code s\'utilise sur la page de confirmation de commande.\n
+Votre code promotionnel à utiliser lors de votre prochaine commande est: DISCOUNT CODE \n
 N\'hésitez surtout pas à me contacter par retour d\'email ou au 01.76.44.02.38, je me tiens entièrement disponible.\n
 En vous souhaitant une excellente journée,\n
 Bien cordialement\n`;
