@@ -560,7 +560,8 @@ async function fulfillmenttracking() {
     var obj = new db.fulfillments(
       {
         "date": new Date(),
-        "username": window.localStorage.getItem('username')
+        "username": window.localStorage.getItem('username'),
+        "issue": $("#f-p-earned").val()
       });
     console.log(obj);
     await obj.save();
@@ -859,14 +860,14 @@ Bien cordialement\n`;
 
 var textDeliveryInAdvance = `
 Bonjour Madame,\n
-Je reviens vers vous au sujet de votre commande du DATE chez TRAITEUR, arrivée en avance et qui n’est donc pas en conformité avec les instructions que vous nous aviez communiquées. Nous sommes totalement conscients que cela ait pu désorganiser la préparation de cet événement et donc votre journée. Nous en sommes tout à fait désolés.\n 
+Je reviens vers vous au sujet de votre commande du DATE chez TRAITEUR, arrivée en avance et qui n\'est donc pas en conformité avec les instructions que vous nous aviez communiquées. Nous sommes totalement conscients que cela ait pu désorganiser la préparation de cet événement et donc votre journée. Nous en sommes tout à fait désolés.\n 
 Le traiteur est navré de ce désagrément et souhaite à ce titre vous offrir la totalité des frais de livraison en les prenant à sa charge. La remise appliquée sur la facture de cette commande sera donc de FRAIS DE LIVRAISON €.\n
 Je reste à votre entière disposition pour toute question, et vous souhaite une excellente journée.\n
 Bien cordialement,\n`;
 
 var textNoDeliveryAtAll = `
 Bonjour,\n
-Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR. Nous sommes sincèrement navrés que cette commande n\'ait pas été livrée. Nous sommes conscients des conséquences d\’un tel incident sur votre l\’organisation de votre journée de travail mais également sur votre image au sein de l\’entreprise.\n
+Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR. Nous sommes sincèrement navrés que cette commande n\'ait pas été livrée. Nous sommes conscients des conséquences d\'un tel incident sur votre l\'organisation de votre journée de travail mais également sur votre image au sein de l\'entreprise.\n
 L\'ambition de GoCater est justement de sécuriser la commande et simplifier les besoins traiteur des entreprises, une non prise en charge de votre commande est donc en contradiction totale avec nos valeurs et celles de nos traiteurs partenaires disponibles sur notre site internet.\n
 Le traiteur TRAITEUR s\'engage donc à ne pas vous facturer cette commande et à vous offrir une remise sur votre prochaine commande. Pour ce faire, vous pouvez utiliser le code de réduction DISCOUNT CODE au moment de confirmer votre prochaine commande avec ce traiteur.\n
 N\'hésitez surtout pas à me contacter par retour d\'email ou au 01.76.44.02.38, je me tiens entièrement disponible pour répondre à vos interrogations ou toute question concernant l\'utilisation de cette réduction.\n
@@ -884,7 +885,7 @@ Bien à vous,\n`;
 
 var textWrongItemDelivered = `
 Bonjour,\n
-Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR. Nous sommes sincèrement navrés que cette livraison n'ait pas été en adéquation avec vos attentes et que les articles livrés ne soient pas ceux que vous avez commandé sur notre site.\n
+Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR. Nous sommes sincèrement navrés que cette livraison n\'ait pas été en adéquation avec vos attentes et que les articles livrés ne soient pas ceux que vous avez commandé sur notre site.\n
 L\'ambition de GoCater est justement de simplifier la commande des besoins traiteur des entreprises et un oubli d\'articles dans une commande est en contradiction avec nos valeurs, nous en sommes désolés.\n
 Pour vous témoigner de notre ambition d\'aider les traiteurs à améliorer leur service, nous souhaitons appliquer un geste commercial sur la facture, il correspond à la gratuité des frais de livraison ainsi que 10% sur l\'alimentaire. Le montant de ce geste est donc de TOTAL GESTE COMMERCIAL €.\n
 N\'hésitez pas à revenir vers nous par retour d\'email ou au 01.76.44.02.38 si le geste ne vous semble pas approprié ou bien si vous souhaitez en discuter, nous sommes entièrement disponibles et ouverts à la discussion.\n
@@ -932,7 +933,7 @@ Bien cordialement\n`;
 var textItemChanged = `
 Bonjour,\n
 Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR. Nous sommes sincèrement désolés pour le changement de produits de dernière minute...\n
-L\'ambition de GoCater est justement de simplifier la commande des besoins traiteur des entreprises, et nous nous efforçons au maximum de maintenir le meilleur niveau de service. Il arrive cependant que certains produits ne soient plus disponibles et nous nous donnons pour mission de vous trouver la meilleur alternative possible afin que votre événement n\’en soit pas affecté.\n
+L\'ambition de GoCater est justement de simplifier la commande des besoins traiteur des entreprises, et nous nous efforçons au maximum de maintenir le meilleur niveau de service. Il arrive cependant que certains produits ne soient plus disponibles et nous nous donnons pour mission de vous trouver la meilleur alternative possible afin que votre événement n\'en soit pas affecté.\n
 A titre de dédommagement, nous souhaitons vous offrir un bon d\'achat de DISCOUNT CODE VALUE € à utiliser sur votre prochaine commande. Le code s\'utilise sur la page de confirmation de commande.\n
 Votre code promotionnel à utiliser lors de votre prochaine commande est: DISCOUNT CODE \n
 N\'hésitez surtout pas à me contacter par retour d\'email ou au 01.76.44.02.38, je me tiens entièrement disponible.\n
@@ -954,54 +955,55 @@ Bien cordialement\n`;
     var generatedMailOrderEdit = "";
     var totalGesteCommercial = "0";
     var remiseCommerciale = "0";
+    var articlesNonFactures = "0";
     
     // Less 30 minutes late
     if (issue == "f-issue-1") {
-      generatedMailCustomer = text30minutesLate;
+      generatedMailCustomer = text30MinutesLate;
     }
     // More than 30 minutes but less than 60 minutes late
     if (issue == "f-issue-2") {
-      generatedMailCustomer = text30lessthan60;
+      generatedMailCustomer = text30LessThan60;
     }
     // More than 60 minutes late
     if (issue == "f-issue-3") {
-      generatedMailCustomer = textmorethan60;
+      generatedMailCustomer = textMoreThan60;
     }
     // Delivery in advance
     if (issue == "f-issue-4") {
-      generatedMailCustomer = textdeliveryinAdvance;
+      generatedMailCustomer = textDeliveryInAdvance;
     }
     // No delivery at all
     if (issue == "f-issue-5") {
-      generatedMailCustomer = textnodeliveryatAll;
+      generatedMailCustomer = textNoDeliveryAtAll;
     }
     // Inappropriate delivery
     if (issue == "f-issue-6") {
-      generatedMailCustomer = textinappropriateDelivery;
+      generatedMailCustomer = textInappropriateDelivery;
     }
     // Wrong items delivered
     if (issue == "f-issue-7") {
-      generatedMailCustomer = textwrongitemDelivered;
+      generatedMailCustomer = textWrongItemDelivered;
     }
     // Missing items
     if (issue == "f-issue-8") {
-      generatedMailCustomer = textmissingItems;
+      generatedMailCustomer = textMissingItems;
     }
     // Food issues?
     if (issue == "f-issue-9") {
-      generatedMailCustomer = textfoodIssues;
+      generatedMailCustomer = textFoodIssues;
     }
     // Insufficient Quantities?
     if (issue == "f-issue-10") {
-      generatedMailCustomer = textinsufficientQuantities;
+      generatedMailCustomer = textInsufficientQuantities;
     }
     // Caterer not Available?
     if (issue == "f-issue-11") {
-      generatedMailCustomer = textcatererNotavailable;
+      generatedMailCustomer = textCatererNotAvailable;
     }
     // Itemschanged
     if (issue == "f-issue-12") {
-    
+      generatedMailCustomer = textItemChanged;
     }
 
     generatedMailCustomer = generatedMailCustomer.replace(/DATE/g, $("#f-date-evt").val());
@@ -1010,6 +1012,8 @@ Bien cordialement\n`;
     generatedMailCustomer = generatedMailCustomer.replace(/DISCOUNT CODE/g, $("#f-code").val());
     generatedMailCustomer = generatedMailCustomer.replace(/TOTAL GESTE COMMERCIAL/g, totalGesteCommercial);
     generatedMailCustomer = generatedMailCustomer.replace(/REMISE COMMERCIALE/g, remiseCommerciale);
+    generatedMailCustomer = generatedMailCustomer.replace(/ARTICLES NON FACTURÉS/g, articlesNonFactures);
+    generatedMailCustomer = generatedMailCustomer.replace(/PARTNER EARNED/g, $("#f-p-earned").val());
     
     $("#f-mail-customer").val(generatedMailCustomer);
     $("#f-mail-caterer").val(generatedMailCaterer);
