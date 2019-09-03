@@ -557,11 +557,16 @@ async function tracking() {
 
 async function fulfillmenttracking() {
   try {
+    var code = $("#f-code").val();
+    if (code.length > 2) {
+      code = code.substring(0, 2);
+    }
     var obj = new db.fulfillments(
       {
         "date": new Date(),
         "username": window.localStorage.getItem('username'),
-        "issue": $("#f-p-earned").val()
+        "issue": $("#f-issue").val(),
+        "encryptcode": code
       });
     console.log(obj);
     await obj.save();
