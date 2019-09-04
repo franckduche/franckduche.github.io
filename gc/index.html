@@ -358,9 +358,9 @@
                 <option value="f-issue-6">Inappropriate delivery</option>
                 <option value="f-issue-7">Wrong items delivered</option>
                 <option value="f-issue-8">Missing items</option>
-                <option value="f-issue-9">Food issues?</option>
-                <option value="f-issue-10">Insufficient Quantities?</option>
-                <option value="f-issue-11">Caterer not Available?</option>
+                <option value="f-issue-9">Food issues</option>
+                <option value="f-issue-10">Insufficient Quantities</option>
+                <option value="f-issue-11">Caterer not Available</option>
                 <option value="f-issue-12" disabled>Itemschanged</option>
               </select>
             </label>
@@ -1000,6 +1000,16 @@ Bien cordialement\n`;
     if (issue == "f-issue-12") {
       generatedMailCustomer = textItemChanged;
     }
+
+    // ABO history
+    var notes = "Recovery from ";
+    notes += $("#f-date-evt").val();
+    notes += ", ";
+    notes += $("#f-issue option:selected").text();
+    notes += ", ";
+    notes += totalGesteCommercial;
+    notes += ", Order edit sent";
+    $("#f-notes").val(notes);
 
     generatedMailCustomer = generatedMailCustomer.replace(/DATE/g, $("#f-date-evt").val());
     generatedMailCustomer = generatedMailCustomer.replace(/TRAITEUR/g, $("#f-cateringp-name").val());
