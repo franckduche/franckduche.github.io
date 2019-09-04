@@ -948,9 +948,9 @@ Bien cordialement\n`;
     var generatedMailCaterer = "";
     var generatedMailCustomer = "";
     var generatedMailOrderEdit = "";
-    var totalGesteCommercial = "0";
-    var remiseCommerciale = "0";
-    var articlesNonFactures = "0";
+    var totalGesteCommercial = 0;
+    var remiseCommerciale = 0;
+    var articlesNonFactures = 0;
 
     // Less 30 minutes late
     if (issue == "f-issue-1") {
@@ -1007,17 +1007,22 @@ Bien cordialement\n`;
     notes += ", ";
     notes += $("#f-issue option:selected").text();
     notes += ", ";
-    notes += totalGesteCommercial;
-    notes += ", Order edit sent";
+    notes += totalGesteCommercial.toString();
+    notes += ", Order edit sent: ";
+    if (totalGesteCommercial > 0) {
+      notes += "YES";
+    } else {
+      notes += "NO";
+    }
     $("#f-notes").val(notes);
 
     generatedMailCustomer = generatedMailCustomer.replace(/DATE/g, $("#f-date-evt").val());
     generatedMailCustomer = generatedMailCustomer.replace(/TRAITEUR/g, $("#f-cateringp-name").val());
     generatedMailCustomer = generatedMailCustomer.replace(/FRAIS DE LIVRAISON/g, $("#f-delivery-fees").val());
     generatedMailCustomer = generatedMailCustomer.replace(/DISCOUNT CODE/g, $("#f-code").val());
-    generatedMailCustomer = generatedMailCustomer.replace(/TOTAL GESTE COMMERCIAL/g, totalGesteCommercial);
-    generatedMailCustomer = generatedMailCustomer.replace(/REMISE COMMERCIALE/g, remiseCommerciale);
-    generatedMailCustomer = generatedMailCustomer.replace(/ARTICLES NON FACTURÉS/g, articlesNonFactures);
+    generatedMailCustomer = generatedMailCustomer.replace(/TOTAL GESTE COMMERCIAL/g, totalGesteCommercial.toString());
+    generatedMailCustomer = generatedMailCustomer.replace(/REMISE COMMERCIALE/g, remiseCommerciale.toString());
+    generatedMailCustomer = generatedMailCustomer.replace(/ARTICLES NON FACTURÉS/g, articlesNonFactures.toString());
     generatedMailCustomer = generatedMailCustomer.replace(/PARTNER EARNED/g, $("#f-p-earned").val());
 
     $("#f-mail-customer").val(generatedMailCustomer);
