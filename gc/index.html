@@ -77,14 +77,14 @@
       padding : 5px 15px;
       background-color: #42b6ca;
     }
-    
-    
-    
+
+
+
 
     #f-mail-customer, #f-mail-caterer, #f-mail-orderedit {
       min-height: 470px;
     }
-    
+
     #f-notes {
       width: 700px;
     }
@@ -299,7 +299,7 @@
             <textarea class="form-control" id="order-page-content"></textarea>
           </div>
         </div>
-        
+
         <div class="col-md-12">
           <div class="row">
             <label for="f-order-id">
@@ -320,7 +320,7 @@
             </label>
           </div>
         </div>
-        
+
         <div class="col-md-12">
           <div class="row">
             <label for="f-p-earned">
@@ -341,11 +341,11 @@
             </label>
           </div>
         </div>
-        
+
         <div class="col-md-12">
-        
+
           <hr />
-          
+
           <div class="row">
             <label for="f-issue">
               Issue <br />
@@ -358,54 +358,54 @@
                 <option value="f-issue-6">Inappropriate delivery</option>
                 <option value="f-issue-7">Wrong items delivered</option>
                 <option value="f-issue-8">Missing items</option>
-                <option value="f-issue-9">Food issues?</option>
-                <option value="f-issue-10">Insufficient Quantities?</option>
-                <option value="f-issue-11">Caterer not Available?</option>
+                <option value="f-issue-9">Food issues</option>
+                <option value="f-issue-10">Insufficient Quantities</option>
+                <option value="f-issue-11">Caterer not Available</option>
                 <option value="f-issue-12" disabled>Itemschanged</option>
               </select>
             </label>
-            
+
             <label for="f-code">
             Discount code
             <input class="form-control" type="text" name="f-code" id="f-code">
             </label>
-            
+
             <button class="btn btn-primary right" id="generate-mails">
             Generate mails
             </button>
           </div>
         </div>
-        
+
         <div class="col-md-12">
-        
+
           <hr />
-          
+
           <div class="row">
-            
+
             <div class="col-md-4">
               <label> Mail customer </label>
               <textarea id="f-mail-customer" class="form-control"></textarea>
             </div>
-            
+
             <div class="col-md-4">
               <label> Mail caterer </label>
               <textarea id="f-mail-caterer" class="form-control"></textarea>
             </div>
-            
+
             <div class="col-md-4">
               <label> Mail orderedit </label>
               <textarea id="f-mail-orderedit" class="form-control"></textarea>
             </div>
-            
+
           </div>
-          
+
           <div class="row">
             <label for="f-notes">
             Notes
             <input class="form-control" type="text" name="f-notes" id="f-notes">
             </label>
           </div>
-          
+
         </div>
 
       </div>
@@ -566,7 +566,9 @@ async function fulfillmenttracking() {
         "date": new Date(),
         "username": window.localStorage.getItem('username'),
         "issue": $("#f-issue").val(),
-        "encryptcode": code
+        "encryptcode": code,
+        "ca": $("#f-cateringp-name").val(),
+        "cu": $("#f-company-name").val()
       });
     console.log(obj);
     await obj.save();
@@ -818,14 +820,14 @@ var egg2 = new Egg("f,r,a,n,c,k", function() {
     if (deliveryFeesArr !== null && deliveryFeesArr.length > 1) {
       $("#f-delivery-fees").val(deliveryFeesArr[1]);
     }
-    
+
     // Company
     var regExp7 = /Company\n(.*)/m;
     var companyArr = regExp7.exec(content);
     if (companyArr !== null && companyArr.length > 1) {
       $("#f-company-name").val(companyArr[1]);
     }
-    
+
     // Caterer
     var regExp8 = /Partner\n(.*)-/m;
     var catererArr = regExp8.exec(content);
@@ -833,7 +835,7 @@ var egg2 = new Egg("f,r,a,n,c,k", function() {
       $("#f-cateringp-name").val(catererArr[1]);
     }
   });
-  
+
 var text30MinutesLate = `Bonjour,\n
 Je me permets de vous contacter au sujet de votre commande du DATE chez TRAITEUR. Nous sommes sincèrement navrés que cette commande ait été livrée avec du retard.\n
 L\'ambition de GoCater est justement de simplifier et de fluidifier la commande des besoins traiteur des entreprises, un retard de livraison sur une commande de la part d\'un partenaire est donc en contradiction avec nos valeurs et celles de traiteurs disponibles sur notre site internet.\n
@@ -861,7 +863,7 @@ En vous souhaitant une excellente journée,\n
 Bien cordialement\n`;
 
 var textDeliveryInAdvance = `Bonjour Madame,\n
-Je reviens vers vous au sujet de votre commande du DATE chez TRAITEUR, arrivée en avance et qui n\'est donc pas en conformité avec les instructions que vous nous aviez communiquées. Nous sommes totalement conscients que cela ait pu désorganiser la préparation de cet événement et donc votre journée. Nous en sommes tout à fait désolés.\n 
+Je reviens vers vous au sujet de votre commande du DATE chez TRAITEUR, arrivée en avance et qui n\'est donc pas en conformité avec les instructions que vous nous aviez communiquées. Nous sommes totalement conscients que cela ait pu désorganiser la préparation de cet événement et donc votre journée. Nous en sommes tout à fait désolés.\n
 Le traiteur est navré de ce désagrément et souhaite à ce titre vous offrir la totalité des frais de livraison en les prenant à sa charge. La remise appliquée sur la facture de cette commande sera donc de FRAIS DE LIVRAISON €.\n
 Je reste à votre entière disposition pour toute question, et vous souhaite une excellente journée.\n
 Bien cordialement,\n`;
@@ -939,17 +941,17 @@ Bien cordialement\n`;
     generateMails();
     setTimeout(fulfillmenttracking, 10);
   });
-  
+
   function generateMails() {
     var code = $("#f-code").val();
     var issue = $("#f-issue").val();
     var generatedMailCaterer = "";
     var generatedMailCustomer = "";
     var generatedMailOrderEdit = "";
-    var totalGesteCommercial = "0";
-    var remiseCommerciale = "0";
-    var articlesNonFactures = "0";
-    
+    var totalGesteCommercial = 0;
+    var remiseCommerciale = 0;
+    var articlesNonFactures = 0;
+
     // Less 30 minutes late
     if (issue == "f-issue-1") {
       generatedMailCustomer = text30MinutesLate;
@@ -999,21 +1001,36 @@ Bien cordialement\n`;
       generatedMailCustomer = textItemChanged;
     }
 
+    // ABO history
+    var notes = "Recovery from ";
+    notes += $("#f-date-evt").val();
+    notes += ", ";
+    notes += $("#f-issue option:selected").text();
+    notes += ", ";
+    notes += totalGesteCommercial.toString();
+    notes += ", Order edit sent: ";
+    if (totalGesteCommercial > 0) {
+      notes += "YES";
+    } else {
+      notes += "NO";
+    }
+    $("#f-notes").val(notes);
+
     generatedMailCustomer = generatedMailCustomer.replace(/DATE/g, $("#f-date-evt").val());
     generatedMailCustomer = generatedMailCustomer.replace(/TRAITEUR/g, $("#f-cateringp-name").val());
     generatedMailCustomer = generatedMailCustomer.replace(/FRAIS DE LIVRAISON/g, $("#f-delivery-fees").val());
     generatedMailCustomer = generatedMailCustomer.replace(/DISCOUNT CODE/g, $("#f-code").val());
-    generatedMailCustomer = generatedMailCustomer.replace(/TOTAL GESTE COMMERCIAL/g, totalGesteCommercial);
-    generatedMailCustomer = generatedMailCustomer.replace(/REMISE COMMERCIALE/g, remiseCommerciale);
-    generatedMailCustomer = generatedMailCustomer.replace(/ARTICLES NON FACTURÉS/g, articlesNonFactures);
+    generatedMailCustomer = generatedMailCustomer.replace(/TOTAL GESTE COMMERCIAL/g, totalGesteCommercial.toString());
+    generatedMailCustomer = generatedMailCustomer.replace(/REMISE COMMERCIALE/g, remiseCommerciale.toString());
+    generatedMailCustomer = generatedMailCustomer.replace(/ARTICLES NON FACTURÉS/g, articlesNonFactures.toString());
     generatedMailCustomer = generatedMailCustomer.replace(/PARTNER EARNED/g, $("#f-p-earned").val());
-    
+
     $("#f-mail-customer").val(generatedMailCustomer);
     $("#f-mail-caterer").val(generatedMailCaterer);
     $("#f-mail-orderedit").val(generatedMailOrderEdit);
   };
-  
-  
+
+
     </script>
 
 
