@@ -945,60 +945,90 @@ Bien cordialement\n`;
   function generateMails() {
     var code = $("#f-code").val();
     var issue = $("#f-issue").val();
+    var deliveryFees = Number($("#f-delivery-fees").val().replace(/,/g, '.').replace(/ /g, ''));
+    var partnerEarned = Number($("#f-p-earned").val().replace(/,/g, '.').replace(/ /g, ''));
+    var tpbc = Number($("#f-tpbc").val().replace(/,/g, '.').replace(/ /g, ''));
     var generatedMailCaterer = "";
     var generatedMailCustomer = "";
     var generatedMailOrderEdit = "";
     var totalGesteCommercial = 0;
     var remiseCommerciale = 0;
-    var articlesNonFactures = 0;
+    var missingItems = 0;
+    var discountCodeValue = 0;
+
+    console.log(deliveryFees);
+    console.log(partnerEarned);
 
     // Less 30 minutes late
     if (issue == "f-issue-1") {
       generatedMailCustomer = text30MinutesLate;
+      totalGesteCommercial = remiseCommerciale + deliveryFees;
     }
     // More than 30 minutes but less than 60 minutes late
     if (issue == "f-issue-2") {
       generatedMailCustomer = text30LessThan60;
+      remiseCommerciale = 0.1 * partnerEarned;
+      totalGesteCommercial = remiseCommerciale + deliveryFees;
     }
     // More than 60 minutes late
     if (issue == "f-issue-3") {
       generatedMailCustomer = textMoreThan60;
+      remiseCommerciale = 0.3 * partnerEarned;
+      totalGesteCommercial = remiseCommerciale + deliveryFees;
+      // + DISCOUNT CODE
     }
     // Delivery in advance
     if (issue == "f-issue-4") {
       generatedMailCustomer = textDeliveryInAdvance;
+      totalGesteCommercial = remiseCommerciale + deliveryFees;
     }
     // No delivery at all
     if (issue == "f-issue-5") {
       generatedMailCustomer = textNoDeliveryAtAll;
+      remiseCommerciale = tpbc;
+      totalGesteCommercial = remiseCommerciale;
     }
     // Inappropriate delivery
     if (issue == "f-issue-6") {
       generatedMailCustomer = textInappropriateDelivery;
+      remiseCommerciale = 0.1 * partnerEarned;
+      totalGesteCommercial = remiseCommerciale + deliveryFees;
     }
     // Wrong items delivered
     if (issue == "f-issue-7") {
       generatedMailCustomer = textWrongItemDelivered;
+      remiseCommerciale = 0.1 * partnerEarned;
+      totalGesteCommercial = remiseCommerciale + deliveryFees;
     }
     // Missing items
     if (issue == "f-issue-8") {
       generatedMailCustomer = textMissingItems;
+      remiseCommerciale = 0.1 * partnerEarned;
+      totalGesteCommercial = remiseCommerciale + deliveryFees + missingItems;
     }
     // Food issues?
     if (issue == "f-issue-9") {
       generatedMailCustomer = textFoodIssues;
+      remiseCommerciale = 0.1 * partnerEarned;
+      totalGesteCommercial = remiseCommerciale + deliveryFees + missingItems;
     }
     // Insufficient Quantities?
     if (issue == "f-issue-10") {
       generatedMailCustomer = textInsufficientQuantities;
+      remiseCommerciale = 0.1 * partnerEarned;
+      totalGesteCommercial = remiseCommerciale;
     }
     // Caterer not Available?
     if (issue == "f-issue-11") {
       generatedMailCustomer = textCatererNotAvailable;
+      remiseCommerciale = 0.1 * partnerEarned;
+      totalGesteCommercial = remiseCommerciale;
     }
     // Itemschanged
     if (issue == "f-issue-12") {
       generatedMailCustomer = textItemChanged;
+      totalGesteCommercial = remiseCommerciale;
+      // + DISCOUNT CODE
     }
 
     // ABO history
@@ -1007,7 +1037,7 @@ Bien cordialement\n`;
     notes += ", ";
     notes += $("#f-issue option:selected").text();
     notes += ", ";
-    notes += totalGesteCommercial.toString();
+    notes += totalGesteCommercial.toFixed(2).toString();
     notes += ", Order edit sent: ";
     if (totalGesteCommercial > 0) {
       notes += "YES";
@@ -1019,10 +1049,11 @@ Bien cordialement\n`;
     generatedMailCustomer = generatedMailCustomer.replace(/DATE/g, $("#f-date-evt").val());
     generatedMailCustomer = generatedMailCustomer.replace(/TRAITEUR/g, $("#f-cateringp-name").val());
     generatedMailCustomer = generatedMailCustomer.replace(/FRAIS DE LIVRAISON/g, $("#f-delivery-fees").val());
+    generatedMailCustomer = generatedMailCustomer.replace(/DISCOUNT CODE VALUE/g, discountCodeValue.toFixed(2).toString());
     generatedMailCustomer = generatedMailCustomer.replace(/DISCOUNT CODE/g, $("#f-code").val());
-    generatedMailCustomer = generatedMailCustomer.replace(/TOTAL GESTE COMMERCIAL/g, totalGesteCommercial.toString());
-    generatedMailCustomer = generatedMailCustomer.replace(/REMISE COMMERCIALE/g, remiseCommerciale.toString());
-    generatedMailCustomer = generatedMailCustomer.replace(/ARTICLES NON FACTURÉS/g, articlesNonFactures.toString());
+    generatedMailCustomer = generatedMailCustomer.replace(/TOTAL GESTE COMMERCIAL/g, totalGesteCommercial.toFixed(2).toString());
+    generatedMailCustomer = generatedMailCustomer.replace(/REMISE COMMERCIALE/g, remiseCommerciale.toFixed(2).toString());
+    generatedMailCustomer = generatedMailCustomer.replace(/ARTICLES NON FACTURÉS/g, missingItems.toFixed(2).toString());
     generatedMailCustomer = generatedMailCustomer.replace(/PARTNER EARNED/g, $("#f-p-earned").val());
 
     $("#f-mail-customer").val(generatedMailCustomer);
