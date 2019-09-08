@@ -370,6 +370,24 @@
             <input class="form-control" type="text" name="f-code" id="f-code">
             </label>
 
+            <label for="f-code-amount">
+            Code amount
+            <input class="form-control" type="text" name="f-code-amount" id="f-code-amount">
+            </label>
+          </div>
+          <div class="row">
+
+            <div class="col-md-6"></div>
+            <label for="f-percent-gc" class="col-md-2">
+              % GC
+              <input class="form-control" type="number" name="f-percent-gc" id="f-percent-gc">
+            </label>
+
+            <label for="f-percent-cp" class="col-md-2">
+              % CP
+              <input class="form-control" type="number" name="f-percent-gc" id="f-percent-cp">
+            </label>
+
             <button class="btn btn-primary right" id="generate-mails">
             Generate mails
             </button>
@@ -568,7 +586,8 @@ async function fulfillmenttracking() {
         "issue": $("#f-issue").val(),
         "encryptcode": code,
         "ca": $("#f-cateringp-name").val(),
-        "cu": $("#f-company-name").val()
+        "cu": $("#f-company-name").val(),
+        "codevalue": $("#f-code-amount").val()
       });
     console.log(obj);
     await obj.save();
@@ -935,7 +954,23 @@ N\'hésitez surtout pas à me contacter par retour d\'email ou au 01.76.44.02.38
 En vous souhaitant une excellente journée,\n
 Bien cordialement\n`;
 
+$("#f-percent-gc").keyup(function () {
+  var percentGC = Number($("#f-percent-gc").val().replace(/,/g, '.').replace(/ /g, ''));
+  $("#f-percent-cp").val((100 - percentGC).toString());
+});
+$("#f-percent-gc").change(function () {
+  var percentGC = Number($("#f-percent-gc").val().replace(/,/g, '.').replace(/ /g, ''));
+  $("#f-percent-cp").val((100 - percentGC).toString());
+});
 
+$("#f-percent-cp").keyup(function () {
+  var percentCP = Number($("#f-percent-cp").val().replace(/,/g, '.').replace(/ /g, ''));
+  $("#f-percent-gc").val((100 - percentCP).toString());
+});
+$("#f-percent-cp").change(function () {
+  var percentCP = Number($("#f-percent-cp").val().replace(/,/g, '.').replace(/ /g, ''));
+  $("#f-percent-gc").val((100 - percentCP).toString());
+});
 
   $("#generate-mails").click(function() {
     generateMails();
@@ -948,16 +983,16 @@ Bien cordialement\n`;
     var deliveryFees = Number($("#f-delivery-fees").val().replace(/,/g, '.').replace(/ /g, ''));
     var partnerEarned = Number($("#f-p-earned").val().replace(/,/g, '.').replace(/ /g, ''));
     var tpbc = Number($("#f-tpbc").val().replace(/,/g, '.').replace(/ /g, ''));
+    var gcEarned = Number($("#f-gc-earned").val().replace(/,/g, '.').replace(/ /g, ''));
     var generatedMailCaterer = "";
     var generatedMailCustomer = "";
     var generatedMailOrderEdit = "";
     var totalGesteCommercial = 0;
     var remiseCommerciale = 0;
     var missingItems = 0;
-    var discountCodeValue = 0;
-
-    console.log(deliveryFees);
-    console.log(partnerEarned);
+    var discountCodeValue = $("#f-code-amount").val();
+    var percentGC = Number($("#f-percent-gc").val().replace(/,/g, '.').replace(/ /g, ''));
+    var percentCP = Number($("#f-percent-cp").val().replace(/,/g, '.').replace(/ /g, ''));
 
     // Less 30 minutes late
     if (issue == "f-issue-1") {
@@ -1049,12 +1084,22 @@ Bien cordialement\n`;
     generatedMailCustomer = generatedMailCustomer.replace(/DATE/g, $("#f-date-evt").val());
     generatedMailCustomer = generatedMailCustomer.replace(/TRAITEUR/g, $("#f-cateringp-name").val());
     generatedMailCustomer = generatedMailCustomer.replace(/FRAIS DE LIVRAISON/g, $("#f-delivery-fees").val());
-    generatedMailCustomer = generatedMailCustomer.replace(/DISCOUNT CODE VALUE/g, discountCodeValue.toFixed(2).toString());
+    generatedMailCustomer = generatedMailCustomer.replace(/DISCOUNT CODE VALUE/g, discountCodeValue);
     generatedMailCustomer = generatedMailCustomer.replace(/DISCOUNT CODE/g, $("#f-code").val());
     generatedMailCustomer = generatedMailCustomer.replace(/TOTAL GESTE COMMERCIAL/g, totalGesteCommercial.toFixed(2).toString());
     generatedMailCustomer = generatedMailCustomer.replace(/REMISE COMMERCIALE/g, remiseCommerciale.toFixed(2).toString());
     generatedMailCustomer = generatedMailCustomer.replace(/ARTICLES NON FACTURÉS/g, missingItems.toFixed(2).toString());
     generatedMailCustomer = generatedMailCustomer.replace(/PARTNER EARNED/g, $("#f-p-earned").val());
+
+    // Mail order edit
+    generatedMailOrderEdit = `NEW TPBC - ${$("#f-date-evt").val()} - ${$("#f-cateringp-name").val()} \n
+Order to be changed: ${$("#f-order-id").val()}
+OLD: ${tpbc.toFixed(2).toString()} € (avant modif)  / ${partnerEarned.toFixed(2).toString()} € (avant modif) / ${gcEarned.toFixed(2).toString()} € (avant modif)
+NEW: ${(tpbc - totalGesteCommercial).toFixed(2).toString()} € /  ${(partnerEarned - totalGesteCommercial).toFixed(2).toString()} € / ${gcEarned.toFixed(2).toString()} € \n
+TPBC : +/- ${(tpbc - (tpbc - totalGesteCommercial)).toFixed(2).toString()} €
+Commission : +/- XX€
+Partner earned : +/- ${(partnerEarned - (partnerEarned - totalGesteCommercial)).toFixed(2).toString()} € \n
+Why ? ${$("#f-issue option:selected").text()}`;
 
     $("#f-mail-customer").val(generatedMailCustomer);
     $("#f-mail-caterer").val(generatedMailCaterer);
