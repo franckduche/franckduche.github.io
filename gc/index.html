@@ -948,6 +948,7 @@ Bien cordialement\n`;
     var deliveryFees = Number($("#f-delivery-fees").val().replace(/,/g, '.').replace(/ /g, ''));
     var partnerEarned = Number($("#f-p-earned").val().replace(/,/g, '.').replace(/ /g, ''));
     var tpbc = Number($("#f-tpbc").val().replace(/,/g, '.').replace(/ /g, ''));
+    var gcEarned = Number($("#f-gc-earned").val().replace(/,/g, '.').replace(/ /g, ''));
     var generatedMailCaterer = "";
     var generatedMailCustomer = "";
     var generatedMailOrderEdit = "";
@@ -1056,8 +1057,11 @@ Bien cordialement\n`;
     // Mail order edit
     generatedMailOrderEdit = `NEW ${tpbc.toFixed(2).toString()} - ${$("#f-date-evt").val()} - ${$("#f-cateringp-name").val()} \n
 Order to be changed: ${$("#f-order-id").val()}
-OLD: ${tpbc.toFixed(2).toString()} € (avant modif)  / ${partnerEarned.toFixed(2).toString()} € (avant modif) / ${$("#f-gc-earned").val()} € (avant modif)
-NEW: ${(tpbc - totalGesteCommercial).toFixed(2).toString()} € /  ${(partnerEarned - totalGesteCommercial).toFixed(2).toString()} € / ${$("#f-gc-earned").val()} €`;
+OLD: ${tpbc.toFixed(2).toString()} € (avant modif)  / ${partnerEarned.toFixed(2).toString()} € (avant modif) / ${gcEarned.toFixed(2).toString()} € (avant modif)
+NEW: ${(tpbc - totalGesteCommercial).toFixed(2).toString()} € /  ${(partnerEarned - totalGesteCommercial).toFixed(2).toString()} € / ${gcEarned.toFixed(2).toString()} € \n
+TPBC : +/- ${(tpbc - (tpbc - totalGesteCommercial)).toFixed(2).toString()} €
+Commission : +/- XX€
+Partner earned : +/- ${(partnerEarned - (partnerEarned - totalGesteCommercial)).toFixed(2).toString()} €`;
 
     $("#f-mail-customer").val(generatedMailCustomer);
     $("#f-mail-caterer").val(generatedMailCaterer);
