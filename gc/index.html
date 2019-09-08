@@ -1092,13 +1092,14 @@ $("#f-percent-cp").change(function () {
     generatedMailCustomer = generatedMailCustomer.replace(/PARTNER EARNED/g, $("#f-p-earned").val());
 
     // Mail order edit
-    generatedMailOrderEdit = `NEW ${tpbc.toFixed(2).toString()} - ${$("#f-date-evt").val()} - ${$("#f-cateringp-name").val()} \n
+    generatedMailOrderEdit = `NEW TPBC - ${$("#f-date-evt").val()} - ${$("#f-cateringp-name").val()} \n
 Order to be changed: ${$("#f-order-id").val()}
 OLD: ${tpbc.toFixed(2).toString()} € (avant modif)  / ${partnerEarned.toFixed(2).toString()} € (avant modif) / ${gcEarned.toFixed(2).toString()} € (avant modif)
 NEW: ${(tpbc - totalGesteCommercial).toFixed(2).toString()} € /  ${(partnerEarned - totalGesteCommercial).toFixed(2).toString()} € / ${gcEarned.toFixed(2).toString()} € \n
 TPBC : +/- ${(tpbc - (tpbc - totalGesteCommercial)).toFixed(2).toString()} €
 Commission : +/- XX€
-Partner earned : +/- ${(partnerEarned - (partnerEarned - totalGesteCommercial)).toFixed(2).toString()} €`;
+Partner earned : +/- ${(partnerEarned - (partnerEarned - totalGesteCommercial)).toFixed(2).toString()} € \n
+Why ? ${$("#f-issue option:selected").text()}`;
 
     $("#f-mail-customer").val(generatedMailCustomer);
     $("#f-mail-caterer").val(generatedMailCaterer);
