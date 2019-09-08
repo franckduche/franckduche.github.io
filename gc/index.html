@@ -956,9 +956,6 @@ Bien cordialement\n`;
     var missingItems = 0;
     var discountCodeValue = 0;
 
-    console.log(deliveryFees);
-    console.log(partnerEarned);
-
     // Less 30 minutes late
     if (issue == "f-issue-1") {
       generatedMailCustomer = text30MinutesLate;
@@ -1055,6 +1052,12 @@ Bien cordialement\n`;
     generatedMailCustomer = generatedMailCustomer.replace(/REMISE COMMERCIALE/g, remiseCommerciale.toFixed(2).toString());
     generatedMailCustomer = generatedMailCustomer.replace(/ARTICLES NON FACTURÉS/g, missingItems.toFixed(2).toString());
     generatedMailCustomer = generatedMailCustomer.replace(/PARTNER EARNED/g, $("#f-p-earned").val());
+
+    // Mail order edit
+    generatedMailOrderEdit = `NEW ${tpbc.toFixed(2).toString()} - ${$("#f-date-evt").val()} - ${$("#f-cateringp-name").val()} \n
+Order to be changed: ${$("#f-order-id").val()}
+OLD: ${tpbc.toFixed(2).toString()} € (avant modif)  / ${partnerEarned.toFixed(2).toString()} € (avant modif) / ${$("#f-gc-earned").val()} € (avant modif)
+NEW: ${(tpbc - totalGesteCommercial).toFixed(2).toString()} € /  ${(partnerEarned - totalGesteCommercial).toFixed(2).toString()} € / ${$("#f-gc-earned").val()} €`;
 
     $("#f-mail-customer").val(generatedMailCustomer);
     $("#f-mail-caterer").val(generatedMailCaterer);
