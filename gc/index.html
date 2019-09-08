@@ -370,6 +370,11 @@
             <input class="form-control" type="text" name="f-code" id="f-code">
             </label>
 
+            <label for="f-code-amout">
+            Code amount
+            <input class="form-control" type="text" name="f-code-amout" id="f-code-amount">
+            </label>
+
             <button class="btn btn-primary right" id="generate-mails">
             Generate mails
             </button>
@@ -568,7 +573,8 @@ async function fulfillmenttracking() {
         "issue": $("#f-issue").val(),
         "encryptcode": code,
         "ca": $("#f-cateringp-name").val(),
-        "cu": $("#f-company-name").val()
+        "cu": $("#f-company-name").val(),
+        "codevalue": $("#f-code-amount").val()
       });
     console.log(obj);
     await obj.save();
@@ -955,7 +961,7 @@ Bien cordialement\n`;
     var totalGesteCommercial = 0;
     var remiseCommerciale = 0;
     var missingItems = 0;
-    var discountCodeValue = 0;
+    var discountCodeValue = $("#f-code-amount").val();
 
     // Less 30 minutes late
     if (issue == "f-issue-1") {
@@ -1047,7 +1053,7 @@ Bien cordialement\n`;
     generatedMailCustomer = generatedMailCustomer.replace(/DATE/g, $("#f-date-evt").val());
     generatedMailCustomer = generatedMailCustomer.replace(/TRAITEUR/g, $("#f-cateringp-name").val());
     generatedMailCustomer = generatedMailCustomer.replace(/FRAIS DE LIVRAISON/g, $("#f-delivery-fees").val());
-    generatedMailCustomer = generatedMailCustomer.replace(/DISCOUNT CODE VALUE/g, discountCodeValue.toFixed(2).toString());
+    generatedMailCustomer = generatedMailCustomer.replace(/DISCOUNT CODE VALUE/g, discountCodeValue);
     generatedMailCustomer = generatedMailCustomer.replace(/DISCOUNT CODE/g, $("#f-code").val());
     generatedMailCustomer = generatedMailCustomer.replace(/TOTAL GESTE COMMERCIAL/g, totalGesteCommercial.toFixed(2).toString());
     generatedMailCustomer = generatedMailCustomer.replace(/REMISE COMMERCIALE/g, remiseCommerciale.toFixed(2).toString());
