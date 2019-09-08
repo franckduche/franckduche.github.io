@@ -374,6 +374,19 @@
             Code amount
             <input class="form-control" type="text" name="f-code-amout" id="f-code-amount">
             </label>
+          </div>
+          <div class="row">
+
+            <div class="col-md-6"></div>
+            <label for="f-percent-gc" class="col-md-2">
+              % GC
+              <input class="form-control" type="number" name="f-percent-gc" id="f-percent-gc">
+            </label>
+
+            <label for="f-percent-cp" class="col-md-2">
+              % CP
+              <input class="form-control" type="number" name="f-percent-gc" id="f-percent-cp">
+            </label>
 
             <button class="btn btn-primary right" id="generate-mails">
             Generate mails
@@ -941,7 +954,23 @@ N\'hésitez surtout pas à me contacter par retour d\'email ou au 01.76.44.02.38
 En vous souhaitant une excellente journée,\n
 Bien cordialement\n`;
 
+$("#f-percent-gc").keyup(function () {
+  var percentGC = Number($("#f-percent-gc").val().replace(/,/g, '.').replace(/ /g, ''));
+  $("#f-percent-cp").val((100 - percentGC).toString());
+});
+$("#f-percent-gc").change(function () {
+  var percentGC = Number($("#f-percent-gc").val().replace(/,/g, '.').replace(/ /g, ''));
+  $("#f-percent-cp").val((100 - percentGC).toString());
+});
 
+$("#f-percent-cp").keyup(function () {
+  var percentCP = Number($("#f-percent-cp").val().replace(/,/g, '.').replace(/ /g, ''));
+  $("#f-percent-gc").val((100 - percentCP).toString());
+});
+$("#f-percent-cp").change(function () {
+  var percentCP = Number($("#f-percent-cp").val().replace(/,/g, '.').replace(/ /g, ''));
+  $("#f-percent-gc").val((100 - percentCP).toString());
+});
 
   $("#generate-mails").click(function() {
     generateMails();
@@ -962,6 +991,8 @@ Bien cordialement\n`;
     var remiseCommerciale = 0;
     var missingItems = 0;
     var discountCodeValue = $("#f-code-amount").val();
+    var percentGC = Number($("#f-percent-gc").val().replace(/,/g, '.').replace(/ /g, ''));
+    var percentCP = Number($("#f-percent-cp").val().replace(/,/g, '.').replace(/ /g, ''));
 
     // Less 30 minutes late
     if (issue == "f-issue-1") {
