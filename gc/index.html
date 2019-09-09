@@ -1003,29 +1003,37 @@ $("#f-percent-cp").change(function () {
     var discountCodeValue = $("#f-code-amount").val();
     var percentGC = Number($("#f-percent-gc").val().replace(/,/g, '.').replace(/ /g, ''));
     var percentCP = Number($("#f-percent-cp").val().replace(/,/g, '.').replace(/ /g, ''));
+    var mailCatererDeliveryFees = false;
+    var mailCatererPercent = false;
 
     // Less 30 minutes late
     if (issue == "f-issue-1") {
       generatedMailCustomer = text30MinutesLate;
       totalGesteCommercial = remiseCommerciale + deliveryFees;
+      mailCatererDeliveryFees = true;
     }
     // More than 30 minutes but less than 60 minutes late
     if (issue == "f-issue-2") {
       generatedMailCustomer = text30LessThan60;
       remiseCommerciale = 0.1 * partnerEarned;
       totalGesteCommercial = remiseCommerciale + deliveryFees;
+      mailCatererDeliveryFees = true;
+      mailCatererPercent = "10%";
     }
     // More than 60 minutes late
     if (issue == "f-issue-3") {
       generatedMailCustomer = textMoreThan60;
       remiseCommerciale = 0.3 * partnerEarned;
       totalGesteCommercial = remiseCommerciale + deliveryFees;
+      mailCatererDeliveryFees = true;
+      mailCatererPercent = "30%";
       // + DISCOUNT CODE
     }
     // Delivery in advance
     if (issue == "f-issue-4") {
       generatedMailCustomer = textDeliveryInAdvance;
       totalGesteCommercial = remiseCommerciale + deliveryFees;
+      mailCatererDeliveryFees = true;
     }
     // No delivery at all
     if (issue == "f-issue-5") {
@@ -1038,36 +1046,46 @@ $("#f-percent-cp").change(function () {
       generatedMailCustomer = textInappropriateDelivery;
       remiseCommerciale = 0.1 * partnerEarned;
       totalGesteCommercial = remiseCommerciale + deliveryFees;
+      mailCatererDeliveryFees = true;
+      mailCatererPercent = "10%";
     }
     // Wrong items delivered
     if (issue == "f-issue-7") {
       generatedMailCustomer = textWrongItemDelivered;
       remiseCommerciale = 0.1 * partnerEarned;
       totalGesteCommercial = remiseCommerciale + deliveryFees;
+      mailCatererDeliveryFees = true;
+      mailCatererPercent = "10%";
     }
     // Missing items
     if (issue == "f-issue-8") {
       generatedMailCustomer = textMissingItems;
       remiseCommerciale = 0.1 * partnerEarned;
       totalGesteCommercial = remiseCommerciale + deliveryFees + missingItems;
+      mailCatererDeliveryFees = true;
+      mailCatererPercent = "10%";
     }
     // Food issues?
     if (issue == "f-issue-9") {
       generatedMailCustomer = textFoodIssues;
       remiseCommerciale = 0.1 * partnerEarned;
       totalGesteCommercial = remiseCommerciale + deliveryFees + missingItems;
+      mailCatererDeliveryFees = true;
+      mailCatererPercent = "10%";
     }
     // Insufficient Quantities?
     if (issue == "f-issue-10") {
       generatedMailCustomer = textInsufficientQuantities;
       remiseCommerciale = 0.1 * partnerEarned;
       totalGesteCommercial = remiseCommerciale;
+      mailCatererPercent = "10%";
     }
     // Caterer not Available?
     if (issue == "f-issue-11") {
       generatedMailCustomer = textCatererNotAvailable;
       remiseCommerciale = 0.1 * partnerEarned;
       totalGesteCommercial = remiseCommerciale;
+      mailCatererPercent = "10%";
     }
     // Itemschanged
     if (issue == "f-issue-12") {
@@ -1114,6 +1132,21 @@ TPBC : +/- ${(tpbc - newTPBC).toFixed(2).toString()} €
 Commission GC : +/- ${(gcEarned - newGCEarned).toFixed(2).toString()} €
 Partner earned : +/- ${(partnerEarned - newPartnerEarned).toFixed(2).toString()} € \n
 Why ? ${$("#f-issue option:selected").text()}`;
+
+    // Mail partner
+    generatedMailCaterer = `Bonjour, \n\n`;
+    generatedMailCaterer += `Suite au problème de la commande du ${$("#f-date-evt").val()} chez ${$("#f-cateringp-name").val()} nous tenons à vous informer des actions prises auprès de notre client. \n\n`;
+    generatedMailCaterer += `Nous avons convenu d'un geste commercial avec le client qui nous semble approprié. Le geste commercial appliqué sur la facture correspond à : \n`;
+    if (mailCatererDeliveryFees) {
+      generatedMailCaterer += `- La gratuité des frais de livraison \n`;
+    }
+    if (!!mailCatererPercent) {
+      generatedMailCaterer += `- Remise de ${mailCatererPercent}% sur la facture \n`;
+    }
+    generatedMailCaterer += `\nLe montant total de la remise effectuée est de ${totalGesteCommercial.toFixed(2).toString()} €.
+Nous prévenir à l'avance de tout changement par rapport à la commande, par exemple retard de livraison, modification des produits, nous permet d'atténuer le montant de ce geste commercial.  N'hésitez pas à nous prévenir avant l'événement cela nous permet de nous organiser avec nos clients et ainsi en minimiser l'impact. Nous vous en remercions par avance.\n
+N'hésitez pas à revenir vers nous si le geste ne vous semble pas approprié ou bien si vous souhaitez en discuter, nous sommes entièrement disponibles et ouverts à la discussion. Notre principal objectif est de travailler en total partenariat.\n
+Bien à vous, excellente journée`;
 
     $("#f-mail-customer").val(generatedMailCustomer);
     $("#f-mail-caterer").val(generatedMailCaterer);
