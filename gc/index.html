@@ -1101,6 +1101,7 @@ $("#f-percent-cp").change(function () {
     notes += $("#f-issue option:selected").text();
     notes += ", ";
     notes += totalGesteCommercial.toFixed(2).toString();
+    notes += "€ commercial gesture";
     notes += ", Order edit sent: ";
     if (totalGesteCommercial > 0) {
       notes += "YES";
