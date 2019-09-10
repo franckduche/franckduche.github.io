@@ -383,7 +383,14 @@
                 <input class="form-control" type="number" name="f-items" id="f-items" value="0" />
               </label>
             </div>
-            <div class="col-md-3"></div>
+            <div class="col-md-1"></div>
+            <div class="col-md-3">
+              <label for="f-custom-remise">
+                Amount items
+                <input class="form-control" type="number" name="f-custom-remise" id="f-custom-remise" style="background-color: #f88e8e;" />
+              </label>
+            </div>
+            <div class="col-md-1"></div>
             <label for="f-percent-gc" class="col-md-2">
               % GC
               <input class="form-control" type="number" name="f-percent-gc" id="f-percent-gc" />
@@ -1005,6 +1012,8 @@ $("#f-percent-cp").change(function () {
     var percentCP = Number($("#f-percent-cp").val().replace(/,/g, '.').replace(/ /g, ''));
     var mailCatererDeliveryFees = false;
     var mailCatererPercent = false;
+    var customRemise = Number($("#f-custom-remise").val().replace(/,/g, '.').replace(/ /g, ''));
+
 
     // Less 30 minutes late
     if (issue == "f-issue-1") {
@@ -1093,6 +1102,11 @@ $("#f-percent-cp").change(function () {
       totalGesteCommercial = remiseCommerciale;
       // + DISCOUNT CODE
     }
+
+    if(customRemise > 0) {
+      totalGesteCommercial = customRemise;
+    }
+
 
     // ABO history
     var notes = "Recovery from ";
