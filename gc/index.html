@@ -967,31 +967,23 @@ N\'hésitez surtout pas à me contacter par retour d\'email ou au 01.76.44.02.38
 En vous souhaitant une excellente journée,\n
 Bien cordialement\n`;
 
-  //
-  // Switches for GC and CP percents
-  //
+$("#f-percent-gc").keyup(function () {
+  var percentGC = Number($("#f-percent-gc").val().replace(/,/g, '.').replace(/ /g, ''));
+  $("#f-percent-cp").val((100 - percentGC).toString());
+});
+$("#f-percent-gc").change(function () {
+  var percentGC = Number($("#f-percent-gc").val().replace(/,/g, '.').replace(/ /g, ''));
+  $("#f-percent-cp").val((100 - percentGC).toString());
+});
 
-  $("#f-percent-gc").keyup(function () {
-    var percentGC = Number($("#f-percent-gc").val().replace(/,/g, '.').replace(/ /g, ''));
-    $("#f-percent-cp").val((100 - percentGC).toString());
-  });
-  $("#f-percent-gc").change(function () {
-    var percentGC = Number($("#f-percent-gc").val().replace(/,/g, '.').replace(/ /g, ''));
-    $("#f-percent-cp").val((100 - percentGC).toString());
-  });
-
-  $("#f-percent-cp").keyup(function () {
-    var percentCP = Number($("#f-percent-cp").val().replace(/,/g, '.').replace(/ /g, ''));
-    $("#f-percent-gc").val((100 - percentCP).toString());
-  });
-  $("#f-percent-cp").change(function () {
-    var percentCP = Number($("#f-percent-cp").val().replace(/,/g, '.').replace(/ /g, ''));
-    $("#f-percent-gc").val((100 - percentCP).toString());
-  });
-
-  //
-  // Click on mails generation button
-  //
+$("#f-percent-cp").keyup(function () {
+  var percentCP = Number($("#f-percent-cp").val().replace(/,/g, '.').replace(/ /g, ''));
+  $("#f-percent-gc").val((100 - percentCP).toString());
+});
+$("#f-percent-cp").change(function () {
+  var percentCP = Number($("#f-percent-cp").val().replace(/,/g, '.').replace(/ /g, ''));
+  $("#f-percent-gc").val((100 - percentCP).toString());
+});
 
   $("#generate-mails").click(function() {
     if ($("#f-percent-gc").val() != "") {
@@ -1003,21 +995,15 @@ Bien cordialement\n`;
   });
 
   function generateMails() {
-
-    //
-    // Variables computations
-    //
-
-    var generatedMailCaterer = "";
-    var generatedMailCustomer = "";
-    var generatedMailOrderEdit = "";
-
     var code = $("#f-code").val();
     var issue = $("#f-issue").val();
     var deliveryFees = Number($("#f-delivery-fees").val().replace(/,/g, '.').replace(/ /g, ''));
     var partnerEarned = Number($("#f-p-earned").val().replace(/,/g, '.').replace(/ /g, ''));
     var tpbc = Number($("#f-tpbc").val().replace(/,/g, '.').replace(/ /g, ''));
     var gcEarned = Number($("#f-gc-earned").val().replace(/,/g, '.').replace(/ /g, ''));
+    var generatedMailCaterer = "";
+    var generatedMailCustomer = "";
+    var generatedMailOrderEdit = "";
     var totalGesteCommercial = 0;
     var remiseCommerciale = 0;
     var missingItems = Number($("#f-items").val().replace(/,/g, '.').replace(/ /g, ''));;
@@ -1028,45 +1014,141 @@ Bien cordialement\n`;
     var mailCatererPercent = false;
     var customRemise = Number($("#f-custom-remise").val().replace(/,/g, '.').replace(/ /g, ''));
 
-    //
-    // Mail customer
-    //
 
-    $("#f-mail-customer").val(generatedMailCustomer);
+    // Less 30 minutes late
+    if (issue == "f-issue-1") {
+      generatedMailCustomer = text30MinutesLate;
+      totalGesteCommercial = remiseCommerciale + deliveryFees;
+      mailCatererDeliveryFees = true;
+    }
+    // More than 30 minutes but less than 60 minutes late
+    if (issue == "f-issue-2") {
+      generatedMailCustomer = text30LessThan60;
+      remiseCommerciale = 0.1 * partnerEarned;
+      totalGesteCommercial = remiseCommerciale + deliveryFees;
+      mailCatererDeliveryFees = true;
+      mailCatererPercent = "10%";
+    }
+    // More than 60 minutes late
+    if (issue == "f-issue-3") {
+      generatedMailCustomer = textMoreThan60;
+      remiseCommerciale = 0.3 * partnerEarned;
+      totalGesteCommercial = remiseCommerciale + deliveryFees;
+      mailCatererDeliveryFees = true;
+      mailCatererPercent = "30%";
+      // + DISCOUNT CODE
+    }
+    // Delivery in advance
+    if (issue == "f-issue-4") {
+      generatedMailCustomer = textDeliveryInAdvance;
+      totalGesteCommercial = remiseCommerciale + deliveryFees;
+      mailCatererDeliveryFees = true;
+    }
+    // No delivery at all
+    if (issue == "f-issue-5") {
+      generatedMailCustomer = textNoDeliveryAtAll;
+      remiseCommerciale = tpbc;
+      totalGesteCommercial = remiseCommerciale;
+    }
+    // Inappropriate delivery
+    if (issue == "f-issue-6") {
+      generatedMailCustomer = textInappropriateDelivery;
+      remiseCommerciale = 0.1 * partnerEarned;
+      totalGesteCommercial = remiseCommerciale + deliveryFees;
+      mailCatererDeliveryFees = true;
+      mailCatererPercent = "10%";
+    }
+    // Wrong items delivered
+    if (issue == "f-issue-7") {
+      generatedMailCustomer = textWrongItemDelivered;
+      remiseCommerciale = 0.1 * partnerEarned;
+      totalGesteCommercial = remiseCommerciale + deliveryFees;
+      mailCatererDeliveryFees = true;
+      mailCatererPercent = "10%";
+    }
+    // Missing items
+    if (issue == "f-issue-8") {
+      generatedMailCustomer = textMissingItems;
+      remiseCommerciale = 0.1 * partnerEarned;
+      totalGesteCommercial = remiseCommerciale + deliveryFees + missingItems;
+      mailCatererDeliveryFees = true;
+      mailCatererPercent = "10%";
+    }
+    // Food issues?
+    if (issue == "f-issue-9") {
+      generatedMailCustomer = textFoodIssues;
+      remiseCommerciale = 0.1 * partnerEarned;
+      totalGesteCommercial = remiseCommerciale + deliveryFees + missingItems;
+      mailCatererDeliveryFees = true;
+      mailCatererPercent = "10%";
+    }
+    // Insufficient Quantities?
+    if (issue == "f-issue-10") {
+      generatedMailCustomer = textInsufficientQuantities;
+      remiseCommerciale = 0.1 * partnerEarned;
+      totalGesteCommercial = remiseCommerciale;
+      mailCatererPercent = "10%";
+    }
+    // Caterer not Available?
+    if (issue == "f-issue-11") {
+      generatedMailCustomer = textCatererNotAvailable;
+      remiseCommerciale = 0.1 * partnerEarned;
+      totalGesteCommercial = remiseCommerciale;
+      mailCatererPercent = "10%";
+    }
+    // Itemschanged
+    if (issue == "f-issue-12") {
+      generatedMailCustomer = textItemChanged;
+      totalGesteCommercial = remiseCommerciale;
+      // + DISCOUNT CODE
+    }
 
-    //
+    if(customRemise > 0) {
+      totalGesteCommercial = customRemise;
+    }
+
+
     // ABO history
-    //
-
     var notes = "Recovery from ";
+    notes += $("#f-date-evt").val();
+    notes += ", ";
+    notes += $("#f-issue option:selected").text();
+    notes += ", ";
+    notes += totalGesteCommercial.toFixed(2).toString();
+    notes += "€ commercial gesture";
+    notes += ", Order edit sent: ";
+    if (totalGesteCommercial > 0) {
+      notes += "YES";
+    } else {
+      notes += "NO";
+    }
     $("#f-notes").val(notes);
 
-    //
-    // Mail order edit
-    //
+    generatedMailCustomer = generatedMailCustomer.replace(/DATE/g, $("#f-date-evt").val());
+    generatedMailCustomer = generatedMailCustomer.replace(/TRAITEUR/g, $("#f-cateringp-name").val());
+    generatedMailCustomer = generatedMailCustomer.replace(/FRAIS DE LIVRAISON/g, $("#f-delivery-fees").val());
+    generatedMailCustomer = generatedMailCustomer.replace(/DISCOUNT CODE VALUE/g, discountCodeValue);
+    generatedMailCustomer = generatedMailCustomer.replace(/DISCOUNT CODE/g, $("#f-code").val());
+    generatedMailCustomer = generatedMailCustomer.replace(/TOTAL GESTE COMMERCIAL/g, totalGesteCommercial.toFixed(2).toString());
+    generatedMailCustomer = generatedMailCustomer.replace(/REMISE COMMERCIALE/g, remiseCommerciale.toFixed(2).toString());
+    generatedMailCustomer = generatedMailCustomer.replace(/ARTICLES NON FACTURÉS/g, missingItems.toFixed(2).toString());
+    generatedMailCustomer = generatedMailCustomer.replace(/PARTNER EARNED/g, $("#f-p-earned").val());
 
+    // Mail order edit
     newTPBC = tpbc - (percentCP * totalGesteCommercial / 100);
     newPartnerEarned = partnerEarned - (percentCP * totalGesteCommercial / 100);
     newGCEarned = gcEarned - (percentGC * totalGesteCommercial / 100);
 
-    generatedMailOrderEdit = `NEW TPBC - ${"date event"} - ${"partner name"}
+    generatedMailOrderEdit = `NEW TPBC - ${$("#f-date-evt").val()} - ${$("#f-cateringp-name").val()} \n
+Order to be changed: ${$("#f-order-id").val()}
+OLD: ${tpbc.toFixed(2).toString()} € / ${partnerEarned.toFixed(2).toString()} € / ${gcEarned.toFixed(2).toString()} €
+NEW: ${newTPBC.toFixed(2).toString()} € /  ${newPartnerEarned.toFixed(2).toString()} € / ${newGCEarned.toFixed(2).toString()} € \n
+TPBC : +/- ${(tpbc - newTPBC).toFixed(2).toString()} €
+Commission GC : +/- ${(gcEarned - newGCEarned).toFixed(2).toString()} €
+Partner earned : +/- ${(partnerEarned - newPartnerEarned).toFixed(2).toString()} € \n
+Why ? ${$("#f-issue option:selected").text()}`;
 
-Order to be changed: ${"order url"}
-OLD: ${"tpbc"} € / ${"partner earned"} € / ${"gc earned"} €
-NEW: ${"new tpbc"} € /  ${"new tpbc"} € / ${"new gc earned"} €
-
-TPBC : ${"+/-"} €
-Commission GC : ${"+/-"} €
-Partner earned : ${"+/-"} €
-
-Why ? ${"issue selected text"}`;
-
-    $("#f-mail-orderedit").val(generatedMailOrderEdit);
-
-    //
     // Mail partner
-    //
-
     generatedMailCaterer = `Bonjour, \n\n`;
     generatedMailCaterer += `Suite au problème de la commande du ${$("#f-date-evt").val()} chez ${$("#f-company-name").val()} nous tenons à vous informer des actions prises auprès de notre client. \n\n`;
     generatedMailCaterer += `Nous avons convenu d'un geste commercial avec le client qui nous semble approprié. Le geste commercial appliqué sur la facture correspond à : \n`;
@@ -1081,7 +1163,9 @@ Nous prévenir à l'avance de tout changement par rapport à la commande, par ex
 N'hésitez pas à revenir vers nous si le geste ne vous semble pas approprié ou bien si vous souhaitez en discuter, nous sommes entièrement disponibles et ouverts à la discussion. Notre principal objectif est de travailler en total partenariat.\n
 Bien à vous, excellente journée`;
 
+    $("#f-mail-customer").val(generatedMailCustomer);
     $("#f-mail-caterer").val(generatedMailCaterer);
+    $("#f-mail-orderedit").val(generatedMailOrderEdit);
   };
 
 
