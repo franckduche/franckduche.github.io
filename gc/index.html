@@ -1012,21 +1012,30 @@ Bien cordialement\n`;
     var generatedMailCustomer = "";
     var generatedMailOrderEdit = "";
 
-    var code = $("#f-code").val();
-    var issue = $("#f-issue").val();
-    var deliveryFees = Number($("#f-delivery-fees").val().replace(/,/g, '.').replace(/ /g, ''));
-    var partnerEarned = Number($("#f-p-earned").val().replace(/,/g, '.').replace(/ /g, ''));
-    var tpbc = Number($("#f-tpbc").val().replace(/,/g, '.').replace(/ /g, ''));
-    var gcEarned = Number($("#f-gc-earned").val().replace(/,/g, '.').replace(/ /g, ''));
-    var totalGesteCommercial = 0;
-    var remiseCommerciale = 0;
-    var missingItems = Number($("#f-items").val().replace(/,/g, '.').replace(/ /g, ''));;
-    var discountCodeValue = $("#f-code-amount").val();
-    var percentGC = Number($("#f-percent-gc").val().replace(/,/g, '.').replace(/ /g, ''));
-    var percentCP = Number($("#f-percent-cp").val().replace(/,/g, '.').replace(/ /g, ''));
-    var mailCatererDeliveryFees = false;
-    var mailCatererPercent = false;
-    var customRemise = Number($("#f-custom-remise").val().replace(/,/g, '.').replace(/ /g, ''));
+    // var code = $("#f-code").val();
+    // var issue = $("#f-issue").val();
+    // var deliveryFees = Number($("#f-delivery-fees").val().replace(/,/g, '.').replace(/ /g, ''));
+    // var partnerEarned = Number($("#f-p-earned").val().replace(/,/g, '.').replace(/ /g, ''));
+    // var tpbc = Number($("#f-tpbc").val().replace(/,/g, '.').replace(/ /g, ''));
+    // var gcEarned = Number($("#f-gc-earned").val().replace(/,/g, '.').replace(/ /g, ''));
+    // var totalGesteCommercial = 0;
+    // var remiseCommerciale = 0;
+    // var missingItems = Number($("#f-items").val().replace(/,/g, '.').replace(/ /g, ''));;
+    // var discountCodeValue = $("#f-code-amount").val();
+    // var percentGC = Number($("#f-percent-gc").val().replace(/,/g, '.').replace(/ /g, ''));
+    // var percentCP = Number($("#f-percent-cp").val().replace(/,/g, '.').replace(/ /g, ''));
+    // var mailCatererDeliveryFees = false;
+    // var mailCatererPercent = false;
+    // var customRemise = Number($("#f-custom-remise").val().replace(/,/g, '.').replace(/ /g, ''));
+
+    var discountCodeName = $("#f-code").val();
+
+
+    //Suis le modèle BOLOSS
+
+
+    var catererName = $("#f-cateringp-name").val();
+
 
     //
     // Mail customer
