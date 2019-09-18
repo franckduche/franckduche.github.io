@@ -327,7 +327,7 @@
             <em> Partner earned </em>
             <input class="form-control" type="text" name="f-p-earned" id="f-p-earned" />
             </label>
-            <label for="f-delivery-fees">
+            <label for="f-c-fees">
             <em> Delivery fees </em>
             <input class="form-control" type="text" name="f-delivery-fees" id="f-delivery-fees" />
             </label>
@@ -344,66 +344,24 @@
 
         <div class="col-md-12">
 
-          <hr />
-
+        <div class="col-md-12">
           <div class="row">
-            <label for="f-issue">
-              Issue <br />
-              <select id="f-issue" name="f-issue">
-                <option value="f-issue-1">Less 30 minutes late</option>
-                <option value="f-issue-2">More than 30 minutes but less than 60 minutes late</option>
-                <option value="f-issue-3">More than 60 minutes late</option>
-                <option value="f-issue-4">Delivery in advance</option>
-                <option value="f-issue-5">No delivery at all</option>
-                <option value="f-issue-6">Inappropriate delivery</option>
-                <option value="f-issue-7">Wrong items delivered</option>
-                <option value="f-issue-8">Missing items</option>
-                <option value="f-issue-9">Food issues</option>
-                <option value="f-issue-10">Insufficient Quantities</option>
-                <option value="f-issue-11">Caterer not Available</option>
-                <option value="f-issue-12" disabled>Itemschanged</option>
-              </select>
+            <label for="f-order-id">
+            <em> Order ID </em>
+            <input class="form-control" type="text" name="f-order-id" id="f-order-id" />
             </label>
-
-            <label for="f-code">
-            Discount code
-            <input class="form-control" type="text" name="f-code" id="f-code" />
+            <label for="f-tpbc">
+            <em> TPBC </em>
+            <input class="form-control" type="text" name="f-tpbc" id="f-tpbc" />
             </label>
-
-            <label for="f-code-amount">
-            Code amount
-            <input class="form-control" type="text" name="f-code-amount" id="f-code-amount" />
+            <label for="f-gc-earned">
+            <em> GC earned </em>
+            <input class="form-control" type="text" name="f-gc-earned" id="f-gc-earned" />
             </label>
-          </div>
-          <div class="row">
-
-            <div class="col-md-3">
-              <label for="f-items">
-                Amount items
-                <input class="form-control" type="number" name="f-items" id="f-items" value="0" />
-              </label>
-            </div>
-            <div class="col-md-1"></div>
-            <div class="col-md-3">
-              <label for="f-custom-remise">
-                Amount items
-                <input class="form-control" type="number" name="f-custom-remise" id="f-custom-remise" style="background-color: #f88e8e;" />
-              </label>
-            </div>
-            <div class="col-md-1"></div>
-            <label for="f-percent-gc" class="col-md-2">
-              % GC
-              <input class="form-control" type="number" name="f-percent-gc" id="f-percent-gc" />
+            <label for="f-date-evt">
+            <em> Event date </em>
+            <input class="form-control" type="text" name="f-date-evt" id="f-date-evt" />
             </label>
-
-            <label for="f-percent-cp" class="col-md-2">
-              % CP
-              <input class="form-control" type="number" name="f-percent-gc" id="f-percent-cp" />
-            </label>
-
-            <button class="btn btn-primary right" id="generate-mails">
-            Generate mails
-            </button>
           </div>
         </div>
 
@@ -429,6 +387,12 @@
             </div>
 
           </div>
+
+
+
+
+
+
 
           <div class="row">
             <label for="f-notes">
@@ -803,10 +767,10 @@ var egg2 = new Egg("f,r,a,n,c,k", function() {
   });
 }).listen();
 
-/////////////////////
-// FULFILLMENTS
-//
-////////////////////
+//////////////////////
+//  FULFILLMENTS    //
+//                  //
+//////////////////////
 
   $("#order-page-content").keyup(function(event) {
     var content = $("#order-page-content").val();
@@ -1008,10 +972,36 @@ Bien cordialement\n`;
     // Variables computations
     //
 
-    var generatedMailCaterer = "";
-    var generatedMailCustomer = "";
-    var generatedMailOrderEdit = "";
+    // Variables related to regexp
+    
+    var orderIdValue = $("#f-order-id").val();
+    var tpbcAmountValue = $("#f-tpbc").val();
+    var gcEarnedValue = $("#f-gc-earned").val();
+    var eventDateValue = $("#f-date-evt").val();
+    var partnerEarnedValue = $("#f-p-earned").val();
+    var deliveryFeesValue = $("#f-delivery-fees").val();
+    var companyNameValue = $("#f-company-id").val();
+    var catererNameValue = $("#f-cateringp-name").val();
 
+    // Variables related to the Issue and Gesture selection
+    
+    var issueNameValue = $("#f-issue").val();
+    var commercialDiscountPercentValue = 
+    var commercialDiscountAmountValue = 
+    var deliveryFeesDiscountPercentValue =
+    var deliveryFeesDiscountAmountValue =
+    var amountTakenCareGc =
+    var amountTakenCareCp =
+
+    // Variables related to calculations
+
+    var newTpbcValue =
+    var newPartnerEarnedValue =
+    var newDeliveryFeesValue =
+    var gcEarnedValue =
+    var partnerEarnedChangeValue =
+    var tpbcEarnedChangeValue =
+     
     // var code = $("#f-code").val();
     // var issue = $("#f-issue").val();
     // var deliveryFees = Number($("#f-delivery-fees").val().replace(/,/g, '.').replace(/ /g, ''));
