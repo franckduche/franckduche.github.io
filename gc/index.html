@@ -275,9 +275,13 @@
               <textarea id="info" name="info" class="form-control"></textarea>
             </div>
           </div>
-          <button class="btn btn-success right" id="generate-text">
-          Generate text
-          </button>
+          <div class="right">
+            <label for="keep-infos" class="white">Keep infos</label>
+            <input type="checkbox" id="keep-infos" name="keep-infos"> &nbsp;
+            <button class="btn btn-success" id="generate-text">
+            Generate text
+            </button>
+          </div>
         </div>
         <div class="col-md-6">
           <p id="errors"></p>
@@ -570,15 +574,6 @@ var menuGlobal = '';
 
 async function tracking() {
   try {
-    var obj = new db.menucreations(
-      {
-        "date": new Date(),
-        "browser": navigator.appVersion,
-        "username": window.localStorage.getItem('username'),
-        "menu": menuGlobal
-      });
-    console.log(obj);
-    await obj.save();
     menuGlobal = '';
   }
   catch (err) {
@@ -588,22 +583,7 @@ async function tracking() {
 
 async function fulfillmenttracking() {
   try {
-    var code = $("#f-code").val();
-    if (code.length > 2) {
-      code = code.substring(0, 2);
-    }
-    var obj = new db.fulfillments(
-      {
-        "date": new Date(),
-        "username": window.localStorage.getItem('username'),
-        "issue": $("#f-issue").val(),
-        "encryptcode": code,
-        "ca": $("#f-cateringp-name").val(),
-        "cu": $("#f-company-name").val(),
-        "codevalue": $("#f-code-amount").val()
-      });
-    console.log(obj);
-    await obj.save();
+    console.log("no more tracking");
   }
   catch (err) {
     console.log(err);
@@ -657,21 +637,26 @@ function generateText() {
   let generatedText = $("#generated-text").val();
   $("#generated-text").val(generatedText + text + "\n\n");
 
-  $("#tag-restrictions").val("");
-  $("#tag-cooking-style").val("");
-  $("#tag-allergens").val("");
-  $("#tag-packaging").val("");
-  $("#tag-temperature").val("");
+  let keepInfos = $('#keep-infos').is(":checked");
+  console.log(keepInfos);
 
-  $("#item-name").val("");
-  $("#vat").val("");
-  $("#info").val("");
-  $("#pexcl-vat").val("");
-  $("#price-ttc").val("");
-  $("#serves").val("1");
-  $("#Min").val("1");
-  $("#sections").val("[]{}");
-  $("#tax-percent").val(10);
+  if (!keepInfos) {
+    $("#tag-restrictions").val("");
+    $("#tag-cooking-style").val("");
+    $("#tag-allergens").val("");
+    $("#tag-packaging").val("");
+    $("#tag-temperature").val("");
+
+    $("#item-name").val("");
+    $("#vat").val("");
+    $("#info").val("");
+    $("#pexcl-vat").val("");
+    $("#price-ttc").val("");
+    $("#serves").val("1");
+    $("#Min").val("1");
+    $("#sections").val("[]{}");
+    $("#tax-percent").val(10);
+  }
 
   menuGlobal = text;
 }
